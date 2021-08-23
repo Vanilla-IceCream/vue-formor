@@ -1,7 +1,7 @@
 {
   "name": "vue-formor",
-  "version": "1.0.0",
-  "description": "TODO:",
+  "version": "0.1.0",
+  "description": "Form validation for Vue in composition functions.",
   "main": "dist/vue-formor.cjs.js",
   "module": "dist/vue-formor.esm.js",
   "files": [
@@ -17,7 +17,11 @@
     "url": "git+https://github.com/Vanilla-IceCream/vue-formor.git"
   },
   "keywords": [
-    "TODO:"
+    "vue",
+    "composition",
+    "form",
+    "validation",
+    "validator"
   ],
   "author": "Vanilla IceCream",
   "license": "MIT",

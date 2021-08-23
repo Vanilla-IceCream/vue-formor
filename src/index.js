@@ -126,6 +126,7 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   };
 };
 
+// TODO: message generator
 export const useValidator = () => {
   return {
     required: (value) => {
