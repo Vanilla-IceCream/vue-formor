@@ -39,15 +39,15 @@ const validator = useValidator();
 
 const validation = useValidation(
   [
-    [computed(() => state.signInForm.username), [validator.required], 'signInForm.username'],
-    [computed(() => state.signInForm.password), [validator.required], 'signInForm.password'],
+    [computed(() => state.signInForm.username), [validator.required]],
+    [computed(() => state.signInForm.password), [validator.required]],
   ],
   state.errors,
 );
 
 const signIn = () => {
   if (validation.validate()) {
-    // Do sign-in
+    // ...
   }
 };
 </script>
@@ -81,6 +81,7 @@ import { reactive, computed } from 'vue';
 import { useValidator, useValidation, useValidationStack } from 'vue-formor';
 
 const state = reactive({
+  form: { groupName: '' },
   table: [{ firstField: '', secondField: '', thirdField: '' }],
   errors: {},
 });
@@ -88,24 +89,100 @@ const state = reactive({
 const validator = useValidator();
 
 const validation = useValidation(
-  [[computed(() => state.form.groupName), [validator.required], 'form.groupName']],
+  [[computed(() => state.form.groupName), [validator.required]]],
   state.errors,
 );
 
 const validationStack = useValidationStack(
   computed(() => state.table),
   (row, idx) => [
-    [computed(() => row.firstField), [validator.required], `table[${idx}].firstField`],
-    [computed(() => row.secondField), [validator.required], `table[${idx}].secondField`],
-    [computed(() => row.thirdField), [validator.required], `table[${idx}].thirdField`],
+    [computed(() => row.firstField), [validator.required]],
+    [computed(() => row.secondField), [validator.required]],
+    [computed(() => row.thirdField), [validator.required]],
   ],
   state.errors,
 );
 
-const doSth = () => {
+const submit = () => {
   if (validator.validateAll(validation, validationStack)) {
     // ...
   }
 };
 </script>
+
+<template>
+  <form>
+    <div>
+      <label for="groupName">Group Name:</label>
+      <input id="groupName" type="text" v-model="state.form.groupName" />
+      <div>{{ state.errors['form.groupName'] }}</div>
+    </div>
+  </form>
+
+  <table>
+    <tr v-for="(row, idx) in state.table" :key="idx">
+      <td>
+        <input v-model="row.firstField" />
+        <div>{{ state.errors[`table[${idx}].firstField`] }}</div>
+      </td>
+      <td>
+        <input v-model="row.secondField" />
+        <div>{{ state.errors[`table[${idx}].secondField`] }}</div>
+      </td>
+      <td>
+        <input v-model="row.thirdField" />
+        <div>{{ state.errors[`table[${idx}].secondField`] }}</div>
+      </td>
+    </tr>
+  </table>
+
+  <button type="button" @click="submit">Submit</button>
+</template>
+```
+
+### Internationalization
+
+TODO:
+
+```js
+import mi from 'message-interpolation';
+
+const state = reactive({
+  errors: {},
+});
+
+const validator = useValidator({
+  errors: state.errors,
+  messages: {
+    required: () => 'This field is required',
+    minLength: (min) => mi('The field must be at least {min} characters long', { min }),
+  },
+});
+
+const validation = useValidation(
+  [computed(() => state.form.foo), [validator.required]],
+  [computed(() => state.form.bar), [validator.required]],
+);
+
+const validationStack = useValidationStack(
+  computed(() => state.table),
+  (row, idx) => [
+    [computed(() => row.firstField), [validator.required]],
+    [computed(() => row.secondField), [validator.required]],
+    [computed(() => row.thirdField), [validator.required]],
+  ],
+);
+```
+
+### Custom Validation Rules
+
+```js
+const maxLength = (max) => (value) => {
+  return value?.length > max ? `The field must be max ${max}} characters long` : '';
+};
+
+const validation = useValidation(
+  [[computed(() => state.form.groupName), [validator.required, maxLength(12)]]],
+  state.errors,
+);
 ```

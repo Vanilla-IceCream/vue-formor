@@ -1,6 +1,6 @@
 import { watch, onUnmounted } from 'vue';
 
-export const useValidation = (fields, storeIn, isCpn = true) => {
+export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stackIdx = 0) => {
   watch(
     () => fields,
     (_fields) => {
@@ -8,28 +8,56 @@ export const useValidation = (fields, storeIn, isCpn = true) => {
         const [val, rules, key] = _fields[i];
 
         let curErrMsg = '';
+        let storeKey = key;
+
+        if (!key) {
+          const keys = val.effect.raw
+            .toString()
+            .split('.')
+            .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+          keys.splice(0, 1);
+          storeKey = keys.join('.');
+        }
+
+        if (tableKey) {
+          storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
+        }
 
         for (let j = 0; j < rules.length; j++) {
           const rule = rules[j];
 
-          if (storeIn[key + '_watch']) {
+          if (storeIn[storeKey + '_watch']) {
             if (curErrMsg === '') {
               curErrMsg = rule(val.value);
-              storeIn[key] = rule(val.value);
+              storeIn[storeKey] = rule(val.value);
             }
           }
         }
       }
     },
-    { deep: true }
+    { deep: true },
   );
 
   if (isCpn) {
     onUnmounted(() => {
       for (let i = 0; i < fields.length; i++) {
         const [val, rules, key] = fields[i];
-        delete storeIn[key];
-        delete storeIn[key + '_watch'];
+
+        let storeKey = key;
+
+        if (!key) {
+          const keys = val.effect.raw
+            .toString()
+            .split('.')
+            .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+          keys.splice(0, 1);
+          storeKey = keys.join('.');
+        }
+
+        delete storeIn[storeKey];
+        delete storeIn[storeKey + '_watch'];
       }
     });
   }
@@ -40,15 +68,30 @@ export const useValidation = (fields, storeIn, isCpn = true) => {
         const [val, rules, key] = fields[i];
 
         let curErrMsg = '';
+        let storeKey = key;
+
+        if (!key) {
+          const keys = val.effect.raw
+            .toString()
+            .split('.')
+            .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+          keys.splice(0, 1);
+          storeKey = keys.join('.');
+        }
+
+        if (tableKey) {
+          storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
+        }
 
         for (let j = 0; j < rules.length; j++) {
           const rule = rules[j];
 
-          storeIn[key + '_watch'] = true;
+          storeIn[storeKey + '_watch'] = true;
 
           if (curErrMsg === '') {
             curErrMsg = rule(val.value);
-            storeIn[key] = rule(val.value);
+            storeIn[storeKey] = rule(val.value);
           }
         }
       }
@@ -75,10 +118,34 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
       const row = stack.value[i];
       const fields = rowFields(row, i);
 
-      for (let i = 0; i < fields.length; i++) {
-        const [val, rules, key] = fields[i];
-        delete storeIn[key];
-        delete storeIn[key + '_watch'];
+      for (let j = 0; j < fields.length; j++) {
+        const [val, rules, key] = fields[j];
+
+        let storeKey = key;
+
+        if (!key) {
+          let tableKey = '';
+
+          const _tablekeys = stack.effect.raw
+            .toString()
+            .split('.')
+            .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+          _tablekeys.splice(0, 1);
+          tableKey = _tablekeys.join('.');
+
+          const keys = val.effect.raw
+            .toString()
+            .split('.')
+            .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+          keys.splice(0, 1);
+          storeKey = keys.join('.');
+          storeKey = `${tableKey}[${i}].${storeKey}`;
+        }
+
+        delete storeIn[storeKey];
+        delete storeIn[storeKey + '_watch'];
       }
     }
   };
@@ -88,13 +155,23 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
     (_stack) => {
       validations = [];
 
+      let tableKey = '';
+
+      const keys = stack.effect.raw
+        .toString()
+        .split('.')
+        .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+      keys.splice(0, 1);
+      tableKey = keys.join('.');
+
       for (let i = 0; i < _stack.length; i++) {
         const row = _stack[i];
-        const rowValidation = useValidation(rowFields(row, i), storeIn, false);
+        const rowValidation = useValidation(rowFields(row, i), storeIn, false, tableKey, i);
         validations.push(rowValidation);
       }
     },
-    { deep: true }
+    { deep: true },
   );
 
   onUnmounted(() => {
@@ -126,12 +203,10 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   };
 };
 
-// TODO: message generator
 export const useValidator = () => {
   return {
     required: (value) => {
-      // TODO: [priority: medium] check array fields
-      if (!value) return 'This field is required';
+      if (!value || (Array.isArray(value) && !value.length)) return 'This field is required';
       return '';
     },
     minLength: (min) => (value) => {
