@@ -144,7 +144,7 @@ const submit = () => {
 
 TODO:
 
-```js
+<!-- ```js
 import mi from 'message-interpolation';
 
 const state = reactive({
@@ -172,9 +172,9 @@ const validationStack = useValidationStack(
     [computed(() => row.thirdField), [validator.required]],
   ],
 );
-```
+``` -->
 
-### Custom Validation Rules
+### Custom Rules
 
 ```js
 const maxLength = (max) => (value) => {
@@ -183,6 +183,21 @@ const maxLength = (max) => (value) => {
 
 const validation = useValidation(
   [[computed(() => state.form.groupName), [validator.required, maxLength(12)]]],
+  state.errors,
+);
+```
+
+### Dynamic Rules
+
+```js
+const validation = useValidation(
+  [
+    [computed(() => state.searchForm.branchCode), [validator.required]],
+    [
+      computed(() => state.searchForm.employeeId),
+      computed(() => (state.searchForm.branchCode === 'AC00' ? [validator.required] : [])),
+    ],
+  ],
   state.errors,
 );
 ```

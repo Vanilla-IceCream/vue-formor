@@ -1,31 +1,90 @@
-import { watch, onUnmounted } from 'vue';
+import { watch, nextTick, onUnmounted } from 'vue';
+
+const getRawKeys = (val) => {
+  const keys = val.raw
+    .toString()
+    .split('.')
+    .map((item) => item.replace(/;|\n|}/g, '').trim());
+
+  keys.splice(0, 1);
+
+  return keys.join('.');
+};
 
 export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stackIdx = 0) => {
+  let checked = false;
+
+  const clean = () => {
+    for (let i = 0; i < fields.length; i++) {
+      const [val, rules, key] = fields[i];
+
+      let storeKey = key;
+      if (!key) storeKey = getRawKeys(val.effect);
+
+      delete storeIn[storeKey];
+      delete storeIn[storeKey + '_watch'];
+    }
+  };
+
+  const validate = () => {
+    checked = true;
+
+    for (let i = 0; i < fields.length; i++) {
+      const [val, rules, key] = fields[i];
+
+      let _rules = rules;
+      if (_rules?.value) _rules = [...rules.value];
+
+      let curErrMsg = '';
+      let storeKey = key;
+
+      if (!key) storeKey = getRawKeys(val.effect);
+      if (tableKey) storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
+
+      for (let j = 0; j < _rules.length; j++) {
+        const rule = _rules[j];
+
+        storeIn[storeKey + '_watch'] = true;
+
+        if (curErrMsg === '') {
+          curErrMsg = rule(val.value);
+          storeIn[storeKey] = rule(val.value);
+        }
+      }
+    }
+
+    return (
+      Object.values(storeIn)
+        .filter(Boolean)
+        .filter((item) => item !== true).length === 0
+    );
+  };
+
   watch(
     () => fields,
     (_fields) => {
+      clean();
+
+      if (checked) {
+        nextTick(() => {
+          validate();
+        });
+      }
+
       for (let i = 0; i < _fields.length; i++) {
         const [val, rules, key] = _fields[i];
 
         let curErrMsg = '';
         let storeKey = key;
 
-        if (!key) {
-          const keys = val.effect.raw
-            .toString()
-            .split('.')
-            .map((item) => item.replace(/;|\n|}/g, '').trim());
+        if (!key) storeKey = getRawKeys(val.effect);
+        if (tableKey) storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
 
-          keys.splice(0, 1);
-          storeKey = keys.join('.');
-        }
+        let _rules = rules;
+        if (_rules?.value) _rules = [...rules.value];
 
-        if (tableKey) {
-          storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
-        }
-
-        for (let j = 0; j < rules.length; j++) {
-          const rule = rules[j];
+        for (let j = 0; j < _rules.length; j++) {
+          const rule = _rules[j];
 
           if (storeIn[storeKey + '_watch']) {
             if (curErrMsg === '') {
@@ -41,73 +100,16 @@ export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stac
 
   if (isCpn) {
     onUnmounted(() => {
-      for (let i = 0; i < fields.length; i++) {
-        const [val, rules, key] = fields[i];
-
-        let storeKey = key;
-
-        if (!key) {
-          const keys = val.effect.raw
-            .toString()
-            .split('.')
-            .map((item) => item.replace(/;|\n|}/g, '').trim());
-
-          keys.splice(0, 1);
-          storeKey = keys.join('.');
-        }
-
-        delete storeIn[storeKey];
-        delete storeIn[storeKey + '_watch'];
-      }
+      clean();
     });
   }
 
   return {
-    validate() {
-      for (let i = 0; i < fields.length; i++) {
-        const [val, rules, key] = fields[i];
-
-        let curErrMsg = '';
-        let storeKey = key;
-
-        if (!key) {
-          const keys = val.effect.raw
-            .toString()
-            .split('.')
-            .map((item) => item.replace(/;|\n|}/g, '').trim());
-
-          keys.splice(0, 1);
-          storeKey = keys.join('.');
-        }
-
-        if (tableKey) {
-          storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
-        }
-
-        for (let j = 0; j < rules.length; j++) {
-          const rule = rules[j];
-
-          storeIn[storeKey + '_watch'] = true;
-
-          if (curErrMsg === '') {
-            curErrMsg = rule(val.value);
-            storeIn[storeKey] = rule(val.value);
-          }
-        }
-      }
-
-      return (
-        Object.values(storeIn)
-          .filter(Boolean)
-          .filter((item) => item !== true).length === 0
-      );
-    },
+    validate,
   };
 };
 
 export const useValidationStack = (stack, rowFields, storeIn) => {
-  // TODO: [enhancement] If the length of the current array is less than the previous one, revalidate it.
-
   let validations = [];
   let checkedLength = 0;
 
@@ -124,23 +126,8 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
         let storeKey = key;
 
         if (!key) {
-          let tableKey = '';
-
-          const _tablekeys = stack.effect.raw
-            .toString()
-            .split('.')
-            .map((item) => item.replace(/;|\n|}/g, '').trim());
-
-          _tablekeys.splice(0, 1);
-          tableKey = _tablekeys.join('.');
-
-          const keys = val.effect.raw
-            .toString()
-            .split('.')
-            .map((item) => item.replace(/;|\n|}/g, '').trim());
-
-          keys.splice(0, 1);
-          storeKey = keys.join('.');
+          const tableKey = getRawKeys(stack.effect);
+          storeKey = getRawKeys(val.effect);
           storeKey = `${tableKey}[${i}].${storeKey}`;
         }
 
@@ -150,20 +137,31 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
     }
   };
 
+  const validate = () => {
+    checkedLength = validations.length;
+
+    const pass = [];
+
+    for (let i = 0; i < validations.length; i++) {
+      const validation = validations[i];
+      pass.push(validation.validate());
+    }
+
+    return pass.every((item) => item === true);
+  };
+
   watch(
     () => stack.value,
     (_stack) => {
-      validations = [];
+      // clean();
 
-      let tableKey = '';
+      // if (checkedLength) {
+      //   nextTick(() => {
+      //     validate();
+      //   });
+      // }
 
-      const keys = stack.effect.raw
-        .toString()
-        .split('.')
-        .map((item) => item.replace(/;|\n|}/g, '').trim());
-
-      keys.splice(0, 1);
-      tableKey = keys.join('.');
+      const tableKey = getRawKeys(stack.effect);
 
       for (let i = 0; i < _stack.length; i++) {
         const row = _stack[i];
@@ -179,25 +177,15 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   });
 
   return {
-    validate() {
-      checkedLength = validations.length;
-
-      const pass = [];
-
-      for (let i = 0; i < validations.length; i++) {
-        const validation = validations[i];
-        pass.push(validation.validate());
-      }
-
-      return pass.every((item) => item === true);
-    },
+    validate,
+    // FIXME: remove it
     recompose() {
       clean();
 
       if (checkedLength) {
-        setTimeout(() => {
+        nextTick(() => {
           this.validate();
-        }, 0);
+        });
       }
     },
   };
