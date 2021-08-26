@@ -144,45 +144,56 @@ const submit = () => {
 
 TODO:
 
-<!-- ```js
-import mi from 'message-interpolation';
+```js
+import { formorSymbol } from 'vue-formor';
 
-const state = reactive({
-  errors: {},
-});
+provide(
+  formorSymbol,
+  reactive({
+    required: 'This field is required',
+    minLength: 'The field must be at least {min} characters long',
+    maxLength: 'The field must be max {max} characters long',
+  }),
+);
+```
 
-const validator = useValidator({
-  errors: state.errors,
-  messages: {
-    required: () => 'This field is required',
-    minLength: (min) => mi('The field must be at least {min} characters long', { min }),
-  },
-});
+### Built-in Rules
 
+```js
 const validation = useValidation(
-  [computed(() => state.form.foo), [validator.required]],
-  [computed(() => state.form.bar), [validator.required]],
-);
-
-const validationStack = useValidationStack(
-  computed(() => state.table),
-  (row, idx) => [
-    [computed(() => row.firstField), [validator.required]],
-    [computed(() => row.secondField), [validator.required]],
-    [computed(() => row.thirdField), [validator.required]],
+  [
+    [
+      computed(() => state.form.employeeId),
+      [
+        validator.required,
+        validator.minLength(8),
+        validator.maxLength(12),
+        validator.pattern(/^[0-9]*$/g, 'This field can only contain numeric values'),
+      ],
+    ],
   ],
+  state.errors,
 );
-``` -->
+```
 
 ### Custom Rules
 
 ```js
-const maxLength = (max) => (value) => {
-  return value?.length > max ? `The field must be max ${max}} characters long` : '';
+const compareEmployeeId = (employeeIdInfo) => (val) => {
+  if (employeeNoInfo.value !== val.replace(/\D/g, '')) {
+    return messageCodeMap[MessageCode.EA0200];
+  }
+
+  return '';
 };
 
 const validation = useValidation(
-  [[computed(() => state.form.groupName), [validator.required, maxLength(12)]]],
+  [
+    [
+      computed(() => state.form.employeeId),
+      [validator.required, compareEmployeeNo(computed(() => state.userInfo.employeeId))],
+    ],
+  ],
   state.errors,
 );
 ```

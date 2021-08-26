@@ -104,20 +104,18 @@ export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stac
     });
   }
 
-  return {
-    validate,
-  };
+  return { validate };
 };
 
 export const useValidationStack = (stack, rowFields, storeIn) => {
   let validations = [];
   let checkedLength = 0;
 
-  const clean = () => {
+  const clean = (stackArr) => {
     validations = [];
 
-    for (let i = 0; i < stack.value.length; i++) {
-      const row = stack.value[i];
+    for (let i = 0; i < stackArr.length; i++) {
+      const row = stackArr[i];
       const fields = rowFields(row, i);
 
       for (let j = 0; j < fields.length; j++) {
@@ -152,14 +150,14 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
 
   watch(
     () => stack.value,
-    (_stack) => {
-      // clean();
+    (_stack, _oldsStack) => {
+      clean(_oldsStack);
 
-      // if (checkedLength) {
-      //   nextTick(() => {
-      //     validate();
-      //   });
-      // }
+      if (checkedLength) {
+        nextTick(() => {
+          validate();
+        });
+      }
 
       const tableKey = getRawKeys(stack.effect);
 
@@ -173,22 +171,10 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   );
 
   onUnmounted(() => {
-    clean();
+    clean(stack.value);
   });
 
-  return {
-    validate,
-    // FIXME: remove it
-    recompose() {
-      clean();
-
-      if (checkedLength) {
-        nextTick(() => {
-          this.validate();
-        });
-      }
-    },
-  };
+  return { validate };
 };
 
 export const useValidator = () => {
@@ -201,7 +187,7 @@ export const useValidator = () => {
       return value?.length < min ? `The field must be at least ${min} characters long` : '';
     },
     maxLength: (max) => (value) => {
-      return value?.length > max ? `The field must be max ${max}} characters long` : '';
+      return value?.length > max ? `The field must be max ${max} characters long` : '';
     },
     pattern: (regExp, message) => (value) => {
       return !regExp.test(value) ? message : '';
