@@ -1,7 +1,9 @@
 import { watch, nextTick, onUnmounted } from 'vue';
 
 const getRawKeys = (val) => {
-  const keys = val.raw
+  const func = val.raw || val.fn;
+
+  const keys = func
     .toString()
     .split('.')
     .map((item) => item.replace(/;|\n|}/g, '').trim());
