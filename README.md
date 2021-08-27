@@ -171,10 +171,10 @@ if (validator.validateAll(validation, validationStack)) {
 TODO:
 
 ```js
-import { formorSymbol } from 'vue-formor';
+import { messageSymbol } from 'vue-formor';
 
 provide(
-  formorSymbol,
+  messageSymbol,
   reactive({
     required: 'This field is required',
     minLength: 'The field must be at least {min} characters long',
@@ -224,6 +224,23 @@ const validation = useValidation(
 );
 ```
 
+Custom Rules in `const validator = useValidator();`
+
+TODO:
+
+```js
+import { ruleSymbol } from 'vue-formor';
+
+const startDateRange = (endDate) => (val) => {
+  const start = new Date(val).getTime();
+  const end = new Date(endDate).getTime();
+  if (start > end) return 'Error';
+  return '';
+};
+
+provide(ruleSymbol, reactive({ dateRange }));
+```
+
 ### Dynamic Rules
 
 ```js
@@ -238,3 +255,50 @@ const validation = useValidation(
   state.errors,
 );
 ```
+
+## API
+
+### `useValidator`
+
+Provide validation rules and helpers
+
+```ts
+export interface ValFunc {
+  (val: any): string;
+}
+
+export interface Rules {
+  required: ValFunc;
+  minLength(min: number): ValFunc;
+  maxLength(min: number): ValFunc;
+  pattern(regExp: RegExp, message: string): ValFunc;
+}
+
+export interface Validator {
+  validateAll(...validations: Validation[]): boolean;
+}
+
+export type UseValidator = Rules & Validator;
+```
+
+Type: `useValidator(): UseValidator`
+
+### `useValidation`
+
+Create form validation
+
+```ts
+
+```
+
+Type: `useValidation(fields, storeIn)`
+
+### `useValidationStack`
+
+Form validation in table cells
+
+```ts
+
+```
+
+Type: `useValidationStack(stack, rowFields, storeIn)`
