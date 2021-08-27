@@ -4,6 +4,8 @@ Form validation for Vue in composition functions.
 
 ## Installation and Usage
 
+Required: vue >= 3.2 < 4
+
 ```sh
 $ npm i vue-formor -S
 # or
@@ -47,7 +49,7 @@ const validation = useValidation(
 
 const signIn = () => {
   if (validation.validate()) {
-    // ...
+    console.log('Sign-in');
   }
 };
 </script>
@@ -81,17 +83,11 @@ import { reactive, computed } from 'vue';
 import { useValidator, useValidation, useValidationStack } from 'vue-formor';
 
 const state = reactive({
-  form: { groupName: '' },
-  table: [{ firstField: '', secondField: '', thirdField: '' }],
+  table: [],
   errors: {},
 });
 
 const validator = useValidator();
-
-const validation = useValidation(
-  [[computed(() => state.form.groupName), [validator.required]]],
-  state.errors,
-);
 
 const validationStack = useValidationStack(
   computed(() => state.table),
@@ -103,41 +99,71 @@ const validationStack = useValidationStack(
   state.errors,
 );
 
+const add = () => {
+  const arr = [...state.table];
+  arr.push({ firstField: '', secondField: '', thirdField: '' });
+  state.table = arr;
+};
+
+const remove = (idx) => {
+  const arr = [...state.table];
+  arr.splice(idx, 1);
+  state.table = arr;
+};
+
 const submit = () => {
-  if (validator.validateAll(validation, validationStack)) {
-    // ...
+  if (validationStack.validate()) {
+    console.log('Submit');
   }
 };
 </script>
 
 <template>
-  <form>
-    <div>
-      <label for="groupName">Group Name:</label>
-      <input id="groupName" type="text" v-model="state.form.groupName" />
-      <div>{{ state.errors['form.groupName'] }}</div>
-    </div>
-  </form>
+  <button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded" @click="add">
+    Add
+  </button>
 
   <table>
     <tr v-for="(row, idx) in state.table" :key="idx">
       <td>
-        <input v-model="row.firstField" />
-        <div>{{ state.errors[`table[${idx}].firstField`] }}</div>
+        <input v-model="row.firstField" class="border" />
+        <div class="text-red-500">{{ state.errors[`table[${idx}].firstField`] }}</div>
       </td>
       <td>
-        <input v-model="row.secondField" />
-        <div>{{ state.errors[`table[${idx}].secondField`] }}</div>
+        <input v-model="row.secondField" class="border" />
+        <div class="text-red-500">{{ state.errors[`table[${idx}].secondField`] }}</div>
       </td>
       <td>
-        <input v-model="row.thirdField" />
-        <div>{{ state.errors[`table[${idx}].secondField`] }}</div>
+        <input v-model="row.thirdField" class="border" />
+        <div class="text-red-500">{{ state.errors[`table[${idx}].thirdField`] }}</div>
+      </td>
+      <td>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white px-4 py-1 rounded"
+          @click="remove(idx)"
+        >
+          Remove
+        </button>
       </td>
     </tr>
   </table>
 
-  <button type="button" @click="submit">Submit</button>
+  <button
+    type="button"
+    class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded"
+    @click="submit"
+  >
+    Submit
+  </button>
 </template>
+```
+
+Form + Table
+
+```js
+if (validator.validateAll(validation, validationStack)) {
+  // ...
+}
 ```
 
 ### Internationalization

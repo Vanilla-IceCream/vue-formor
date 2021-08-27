@@ -1,4 +1,4 @@
-import { watch, nextTick, onUnmounted } from 'vue';
+import { effectScope, watch, nextTick, onUnmounted } from 'vue';
 
 const getRawKeys = (val) => {
   const func = val.raw || val.fn;
@@ -62,43 +62,47 @@ export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stac
     );
   };
 
-  watch(
-    () => fields,
-    (_fields) => {
-      clean();
+  const scope = effectScope();
 
-      if (checked) {
-        nextTick(() => {
-          validate();
-        });
-      }
+  scope.run(() => {
+    watch(
+      () => fields,
+      (_fields) => {
+        clean();
 
-      for (let i = 0; i < _fields.length; i++) {
-        const [val, rules, key] = _fields[i];
+        if (checked) {
+          nextTick(() => {
+            validate();
+          });
+        }
 
-        let curErrMsg = '';
-        let storeKey = key;
+        for (let i = 0; i < _fields.length; i++) {
+          const [val, rules, key] = _fields[i];
 
-        if (!key) storeKey = getRawKeys(val.effect);
-        if (tableKey) storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
+          let curErrMsg = '';
+          let storeKey = key;
 
-        let _rules = rules;
-        if (_rules?.value) _rules = [...rules.value];
+          if (!key) storeKey = getRawKeys(val.effect);
+          if (tableKey) storeKey = `${tableKey}[${stackIdx}].${storeKey}`;
 
-        for (let j = 0; j < _rules.length; j++) {
-          const rule = _rules[j];
+          let _rules = rules;
+          if (_rules?.value) _rules = [...rules.value];
 
-          if (storeIn[storeKey + '_watch']) {
-            if (curErrMsg === '') {
-              curErrMsg = rule(val.value);
-              storeIn[storeKey] = rule(val.value);
+          for (let j = 0; j < _rules.length; j++) {
+            const rule = _rules[j];
+
+            if (storeIn[storeKey + '_watch']) {
+              if (curErrMsg === '') {
+                curErrMsg = rule(val.value);
+                storeIn[storeKey] = rule(val.value);
+              }
             }
           }
         }
-      }
-    },
-    { deep: true },
-  );
+      },
+      { deep: true },
+    );
+  });
 
   if (isCpn) {
     onUnmounted(() => {
@@ -106,7 +110,12 @@ export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stac
     });
   }
 
-  return { validate };
+  return {
+    validate,
+    stop() {
+      scope.stop();
+    },
+  };
 };
 
 export const useValidationStack = (stack, rowFields, storeIn) => {
@@ -114,6 +123,11 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   let checkedLength = 0;
 
   const clean = (stackArr) => {
+    for (let i = 0; i < validations.length; i++) {
+      const validation = validations[i];
+      validation.stop();
+    }
+
     validations = [];
 
     for (let i = 0; i < stackArr.length; i++) {
