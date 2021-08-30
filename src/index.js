@@ -120,7 +120,7 @@ export const useValidation = (fields, storeIn, isCpn = true, tableKey = '', stac
 
 export const useValidationStack = (stack, rowFields, storeIn) => {
   let validations = [];
-  let checkedLength = 0;
+  let checked = false;
 
   const clean = (stackArr) => {
     for (let i = 0; i < validations.length; i++) {
@@ -152,7 +152,7 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   };
 
   const validate = () => {
-    checkedLength = validations.length;
+    checked = true;
 
     const pass = [];
 
@@ -169,7 +169,7 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
     (_stack, _oldsStack) => {
       clean(_oldsStack);
 
-      if (checkedLength) {
+      if (checked) {
         nextTick(() => {
           validate();
         });
