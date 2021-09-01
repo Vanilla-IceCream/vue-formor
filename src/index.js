@@ -122,6 +122,18 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
   let validations = [];
   let checked = false;
 
+  const create = (stackArr) => {
+    if (Array.isArray(stackArr)) {
+      const tableKey = getRawKeys(stack.effect);
+
+      for (let i = 0; i < stackArr.length; i++) {
+        const row = stackArr[i];
+        const rowValidation = useValidation(rowFields(row, i), storeIn, false, tableKey, i);
+        validations.push(rowValidation);
+      }
+    }
+  };
+
   const clean = (stackArr) => {
     for (let i = 0; i < validations.length; i++) {
       const validation = validations[i];
@@ -164,6 +176,8 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
     return pass.every((item) => item === true);
   };
 
+  create(stack.value);
+
   watch(
     () => stack.value,
     (_stack, _oldsStack) => {
@@ -175,13 +189,7 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
         });
       }
 
-      const tableKey = getRawKeys(stack.effect);
-
-      for (let i = 0; i < _stack.length; i++) {
-        const row = _stack[i];
-        const rowValidation = useValidation(rowFields(row, i), storeIn, false, tableKey, i);
-        validations.push(rowValidation);
-      }
+      create(_stack);
     },
     { deep: true },
   );
