@@ -1,4 +1,8 @@
-import { effectScope, watch, nextTick, onUnmounted } from 'vue';
+import { effectScope, inject, watch, nextTick, onUnmounted } from 'vue';
+import $f from 'message-interpolation';
+
+export const messageSymbol = Symbol('messages');
+export const ruleSymbol = Symbol('rule');
 
 const getRawKeys = (val) => {
   const func = val.raw || val.fn;
@@ -202,16 +206,27 @@ export const useValidationStack = (stack, rowFields, storeIn) => {
 };
 
 export const useValidator = () => {
+  const messages = inject(messageSymbol, {
+    required: 'This field is required',
+    minLength: 'The field must be at least {min} characters long',
+    maxLength: 'The field must be max {max} characters long',
+  });
+
+  const rules = inject(ruleSymbol, {});
+
   return {
+    ...rules,
     required: (value) => {
-      if (!value || (Array.isArray(value) && !value.length)) return 'This field is required';
+      if (!value || (Array.isArray(value) && !value.length)) return messages.required;
       return '';
     },
     minLength: (min) => (value) => {
-      return value?.length < min ? `The field must be at least ${min} characters long` : '';
+      if (value?.length < min) return $f(messages.minLength, { min });
+      return '';
     },
     maxLength: (max) => (value) => {
-      return value?.length > max ? `The field must be max ${max} characters long` : '';
+      if (value?.length > max) return $f(messages.maxLength, { max });
+      return '';
     },
     pattern: (regExp, message) => (value) => {
       return !regExp.test(value) ? message : '';

@@ -166,23 +166,6 @@ if (validator.validateAll(validation, validationStack)) {
 }
 ```
 
-### Internationalization
-
-TODO:
-
-```js
-import { messageSymbol } from 'vue-formor';
-
-provide(
-  messageSymbol,
-  reactive({
-    required: 'This field is required',
-    minLength: 'The field must be at least {min} characters long',
-    maxLength: 'The field must be max {max} characters long',
-  }),
-);
-```
-
 ### Built-in Rules
 
 ```js
@@ -199,6 +182,21 @@ const validation = useValidation(
     ],
   ],
   state.errors,
+);
+```
+
+### Internationalization
+
+```js
+import { messageSymbol } from 'vue-formor';
+
+provide(
+  messageSymbol,
+  reactive({
+    required: 'This field is required',
+    minLength: 'The field must be at least {min} characters long',
+    maxLength: 'The field must be max {max} characters long',
+  }),
 );
 ```
 
@@ -224,9 +222,32 @@ const validation = useValidation(
 );
 ```
 
-Custom Rules in `const validator = useValidator();`
+Extends from `validator.required`
 
-TODO:
+```js
+const validator = useValidator();
+
+const eitherOrRequired = (val) => {
+  if (validator.required(val)) return 'Either Customer ID or A/C No. field is required';
+  return '';
+};
+
+const validation = useValidation(
+  [
+    [
+      computed(() => state.searchForm.customerId),
+      computed(() => (state.searchForm.accountNo === '' ? [eitherOrRequired] : [])),
+    ],
+    [
+      computed(() => state.searchForm.accountNo),
+      computed(() => (state.searchForm.customerId === '' ? [eitherOrRequired] : [])),
+    ],
+  ],
+  state.errors,
+);
+```
+
+Custom Rules in `const validator = useValidator();`
 
 ```js
 import { ruleSymbol } from 'vue-formor';
@@ -234,11 +255,30 @@ import { ruleSymbol } from 'vue-formor';
 const startDateRange = (endDate) => (val) => {
   const start = new Date(val).getTime();
   const end = new Date(endDate).getTime();
-  if (start > end) return 'Error';
+  if (start > end) return 'Provided date is not in valid range';
   return '';
 };
 
 provide(ruleSymbol, reactive({ dateRange }));
+```
+
+Extends from `validator.pattern`
+
+```js
+import { ruleSymbol } from 'vue-formor';
+
+const onlyNumbers = (val) => {
+  return validator.pattern(/^[0-9]*$/g, 'This field can only contain numeric values')(val);
+};
+
+provide(ruleSymbol, reactive({ onlyNumbers }));
+```
+
+```js
+const validation = useValidation(
+  [[computed(() => state.form.employeeId), [validator.required, validator.onlyNumbers]]],
+  state.errors,
+);
 ```
 
 ### Dynamic Rules

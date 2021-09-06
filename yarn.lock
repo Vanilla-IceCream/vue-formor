@@ -2967,6 +2967,11 @@ merge-stream@^2.0.0:
   resolved "http://161.202.62.99:4873/merge-stream/-/merge-stream-2.0.0.tgz#52823629a14dd00c9770fb6ad47dc6310f2c1f60"
   integrity sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
 
+message-interpolation@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/message-interpolation/-/message-interpolation-1.0.1.tgz#041665aaefdb14cb396c29414236d9d157e80c71"
+  integrity sha512-yP5DgTNu16op1b3k04AY8aMii/IsI4yjFH0oh8SZriP0D4UMu9MObhQhRmUcEAE/5SRu/69m3OKUhgJbKz3M9A==
+
 micromatch@^4.0.4:
   version "4.0.4"
   resolved "http://161.202.62.99:4873/micromatch/-/micromatch-4.0.4.tgz#896d519dfe9db25fce94ceb7a500919bf881ebf9"
