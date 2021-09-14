@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`vue-formor Form 1`] = `
+"<form>
+  <div class=\\"font-bold\\">Form</div>
+  <div><label for=\\"form-firstField\\">First Field:</label><input id=\\"form-firstField\\" type=\\"text\\" class=\\"border\\">
+    <div class=\\"text-red-500\\"></div>
+  </div>
+  <div><label for=\\"form-secondField\\">Second Field:</label><input id=\\"form-secondField\\" type=\\"text\\" class=\\"border\\">
+    <div class=\\"text-red-500\\"></div>
+  </div>
+  <div><button id=\\"submit\\" type=\\"button\\" class=\\"bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded\\"> Submit </button></div>
+</form>"
+`;

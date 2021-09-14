@@ -6,7 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
 
 export default {
-  input: path.join(__dirname, 'src/index.js'),
+  input: path.join(__dirname, 'src/vue-formor.js'),
   output: [
     { file: pkg.main, format: 'cjs', exports: 'auto' },
     { file: pkg.module, format: 'esm' },
