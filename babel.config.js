@@ -3,6 +3,6 @@ module.exports = (api) => {
 
   return {
     presets: ['@babel/preset-env'],
-    plugins: [],
+    plugins: ['@babel/plugin-transform-runtime'],
   };
 };
