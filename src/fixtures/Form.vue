@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, computed } from 'vue';
 
-import { useValidator, useValidation } from './vue-formor.js';
+import { useValidator, useValidation } from '../vue-formor.js';
 
 const state = reactive({
   form: {

@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`vue-formor DynamicRules 1`] = `
+<form>
+  <div class="font-bold">Dynamic Rules</div>
+  <div><label for="cars">Choose a car:</label><select id="cars" name="cars" class="border">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+    <div class="text-red-500"></div>
+  </div>
+  <div><label for="des">Second Field:</label><input id="dynamicRules-secondField" type="text" class="border">
+    <div class="text-red-500"></div>
+  </div>
+  <div><label for="des">Third Field:</label><input id="dynamicRules-thirdField" type="text" class="border">
+    <div class="text-red-500"></div>
+  </div>
+  <div><button type="button" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded"> Submit </button></div>
+</form>
+`;
+
 exports[`vue-formor Form 1`] = `
 <form>
   <div class="font-bold">Form</div>
@@ -11,4 +32,11 @@ exports[`vue-formor Form 1`] = `
   </div>
   <div><button id="submit" type="button" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded"> Submit </button></div>
 </form>
+`;
+
+exports[`vue-formor TabularForm 1`] = `
+<div>
+  <div class="font-bold">Tabular Form</div><button class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded"> Add </button>
+  <table></table><button type="button" class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded"> Submit </button>
+</div>
 `;
