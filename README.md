@@ -205,7 +205,7 @@ provide(
 ```js
 const compareEmployeeId = (employeeIdInfo) => (val) => {
   if (employeeNoInfo.value !== val.replace(/\D/g, '')) {
-    return messageCodeMap[MessageCode.EA0200];
+    return 'Employee ID does not match';
   }
 
   return '';
@@ -228,7 +228,7 @@ Extends from `validator.required`
 const validator = useValidator();
 
 const eitherOrRequired = (val) => {
-  if (validator.required(val)) return 'Either Customer ID or A/C No. field is required';
+  if (validator.required(val)) return 'Either Customer ID or Account Number field is required';
   return '';
 };
 
@@ -236,11 +236,11 @@ const validation = useValidation(
   [
     [
       computed(() => state.searchForm.customerId),
-      computed(() => (state.searchForm.accountNo === '' ? [eitherOrRequired] : [])),
+      computed(() => (!state.searchForm.accountNumber ? [eitherOrRequired] : [])),
     ],
     [
-      computed(() => state.searchForm.accountNo),
-      computed(() => (state.searchForm.customerId === '' ? [eitherOrRequired] : [])),
+      computed(() => state.searchForm.accountNumber),
+      computed(() => (!state.searchForm.customerId ? [eitherOrRequired] : [])),
     ],
   ],
   state.errors,
