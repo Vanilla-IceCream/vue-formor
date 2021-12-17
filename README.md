@@ -342,3 +342,35 @@ Form validation in table cells
 ```
 
 Type: `useValidationStack(stack, rowFields, storeIn)`
+
+## Designs
+
+```js
+import { useValidator, useValidation } from 'vue-formor';
+
+const validator = useValidator();
+
+const validation = useValidation(
+  [
+    [ref(state.form.username), [validator.required]],
+    [ref(state.form.password), [validator.required]],
+    [
+      ref(state.form.table),
+      (row) => [
+        [ref(row.firstField), [validator.required]],
+        [ref(row.secondField), [validator.required]],
+        [ref(row.thirdField), [validator.required]],
+        [
+          ref(row.sub),
+          (subRow) => [
+            [ref(subRow.firstField), [validator.required]],
+            [ref(subRow.secondField), [validator.required]],
+            [ref(subRow.thirdField), [validator.required]],
+          ],
+        ],
+      ],
+    ],
+  ],
+  state.errors,
+);
+```
