@@ -1,6 +1,6 @@
 {
   "name": "vue-formor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Form validation for Vue in composition functions.",
   "main": "dist/vue-formor.cjs.js",
   "module": "dist/vue-formor.esm.js",
