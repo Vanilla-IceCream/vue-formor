@@ -16,10 +16,10 @@ $ yarn add vue-formor
 
 ```js
 // for commonjs
-const { useValidator, useValidation, useValidationStack } = require('vue-formor');
+const { useValidator, useValidation } = require('vue-formor');
 
 // for es modules
-import { useValidator, useValidation, useValidationStack } from 'vue-formor';
+import { useValidator, useValidation } from 'vue-formor';
 ```
 
 ## Getting Started
@@ -44,7 +44,7 @@ const validation = useValidation(
     [computed(() => state.signInForm.username), [validator.required]],
     [computed(() => state.signInForm.password), [validator.required]],
   ],
-  state.errors,
+  state,
 );
 
 const signIn = () => {
@@ -80,7 +80,7 @@ Stack
 ```vue
 <script setup>
 import { reactive, computed } from 'vue';
-import { useValidator, useValidation, useValidationStack } from 'vue-formor';
+import { useValidator, useValidation } from 'vue-formor';
 
 const state = reactive({
   table: [],
@@ -89,14 +89,18 @@ const state = reactive({
 
 const validator = useValidator();
 
-const validationStack = useValidationStack(
-  computed(() => state.table),
-  (row, idx) => [
-    [computed(() => row.firstField), [validator.required]],
-    [computed(() => row.secondField), [validator.required]],
-    [computed(() => row.thirdField), [validator.required]],
+const validationStack = useValidation(
+  [
+    [
+      computed(() => state.table),
+      (row, idx) => [
+        [computed(() => row.firstField), [validator.required]],
+        [computed(() => row.secondField), [validator.required]],
+        [computed(() => row.thirdField), [validator.required]],
+      ],
+    ],
   ],
-  state.errors,
+  state,
 );
 
 const add = () => {
@@ -161,7 +165,7 @@ const submit = () => {
 Form + Table
 
 ```js
-if (validator.validateAll(validation, validationStack)) {
+if (validator.validateAll(validation1, validation2)) {
   // ...
 }
 ```
@@ -173,15 +177,10 @@ const validation = useValidation(
   [
     [
       computed(() => state.form.employeeId),
-      [
-        validator.required,
-        validator.minLength(8),
-        validator.maxLength(12),
-        validator.pattern(/^[0-9]*$/g, 'This field can only contain numeric values'),
-      ],
+      [validator.required, validator.minLength(8), validator.maxLength(12)],
     ],
   ],
-  state.errors,
+  state,
 );
 ```
 
@@ -218,7 +217,7 @@ const validation = useValidation(
       [validator.required, compareEmployeeNo(computed(() => state.userInfo.employeeId))],
     ],
   ],
-  state.errors,
+  state,
 );
 ```
 
@@ -243,7 +242,7 @@ const validation = useValidation(
       computed(() => (!state.searchForm.customerId ? [eitherOrRequired] : [])),
     ],
   ],
-  state.errors,
+  state,
 );
 ```
 
@@ -277,7 +276,7 @@ provide(ruleSymbol, reactive({ onlyNumbers }));
 ```js
 const validation = useValidation(
   [[computed(() => state.form.employeeId), [validator.required, validator.onlyNumbers]]],
-  state.errors,
+  state,
 );
 ```
 
@@ -292,7 +291,7 @@ const validation = useValidation(
       computed(() => (state.searchForm.branchCode === 'AC00' ? [validator.required] : [])),
     ],
   ],
-  state.errors,
+  state,
 );
 ```
 
@@ -311,7 +310,6 @@ export interface Rules {
   required: ValFunc;
   minLength(min: number): ValFunc;
   maxLength(min: number): ValFunc;
-  pattern(regExp: RegExp, message: string): ValFunc;
 }
 
 export interface Validator {
@@ -332,45 +330,3 @@ Create form validation
 ```
 
 Type: `useValidation(fields, storeIn)`
-
-### `useValidationStack`
-
-Form validation in table cells
-
-```ts
-
-```
-
-Type: `useValidationStack(stack, rowFields, storeIn)`
-
-## Designs
-
-```js
-import { useValidator, useValidation } from 'vue-formor';
-
-const validator = useValidator();
-
-const validation = useValidation(
-  [
-    [ref(state.form.username), [validator.required]],
-    [ref(state.form.password), [validator.required]],
-    [
-      ref(state.form.table),
-      (row) => [
-        [ref(row.firstField), [validator.required]],
-        [ref(row.secondField), [validator.required]],
-        [ref(row.thirdField), [validator.required]],
-        [
-          ref(row.sub),
-          (subRow) => [
-            [ref(subRow.firstField), [validator.required]],
-            [ref(subRow.secondField), [validator.required]],
-            [ref(subRow.thirdField), [validator.required]],
-          ],
-        ],
-      ],
-    ],
-  ],
-  state.errors,
-);
-```

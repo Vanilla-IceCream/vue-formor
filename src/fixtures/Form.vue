@@ -8,7 +8,6 @@ const state = reactive({
     firstField: '',
     secondField: '',
   },
-  isSubmitted: false,
   errors: {},
 });
 
@@ -19,12 +18,12 @@ const validation = useValidation(
     [computed(() => state.form.firstField), [validator.required]],
     [computed(() => state.form.secondField), [validator.required]],
   ],
-  state.errors,
+  state,
 );
 
 const submit = () => {
   if (validation.validate()) {
-    state.isSubmitted = true;
+    console.log('Submit');
   }
 };
 </script>
@@ -47,7 +46,6 @@ const submit = () => {
 
     <div>
       <button
-        id="submit"
         type="button"
         class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-1 rounded"
         @click="submit"
