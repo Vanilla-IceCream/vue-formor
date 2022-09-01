@@ -295,6 +295,45 @@ const validation = useValidation(
 );
 ```
 
+### Validation schemas with `yup`
+
+TODO:
+
+```ts
+import { computed, reactive } from 'vue';
+import { useSchema } from 'vue-formor';
+import { setLocale, string } from 'yup';
+
+setLocale({
+  mixed: {
+    required: 'This field is required',
+  },
+});
+
+const state = reactive({
+  searchForm: {
+    employeeId: '',
+  },
+  errors: {},
+});
+
+const schema = useSchema(
+  [
+    [computed(() => state.searchForm.employeeId), string().required()],
+  ],
+  state,
+);
+
+const submit = () => {
+  if (schema.validate()) {
+    // passed
+  } else {
+    // failed
+    console.log(state.errors['searchForm.employeeId']); // This field is required
+  }
+};
+```
+
 ## API
 
 ### `useValidator`
