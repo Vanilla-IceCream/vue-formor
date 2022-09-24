@@ -4,8 +4,6 @@ Form validation for Vue in composition functions.
 
 ## Installation and Usage
 
-Required: vue >= 3.2 < 4
-
 ```sh
 $ npm i vue-formor -S
 # or
@@ -16,10 +14,10 @@ $ yarn add vue-formor
 
 ```js
 // for commonjs
-const { useValidator, useValidation } = require('vue-formor');
+const { useValidator, useValidation, useSchema } = require('vue-formor');
 
 // for es modules
-import { useValidator, useValidation } from 'vue-formor';
+import { useValidator, useValidation, useSchema } from 'vue-formor';
 ```
 
 ## Getting Started
@@ -75,7 +73,7 @@ const signIn = () => {
 </template>
 ```
 
-Stack
+Iterator:
 
 ```vue
 <script setup>
@@ -89,7 +87,7 @@ const state = reactive({
 
 const validator = useValidator();
 
-const validationStack = useValidation(
+const validation = useValidation(
   [
     [
       computed(() => state.table),
@@ -116,7 +114,7 @@ const remove = (idx) => {
 };
 
 const submit = () => {
-  if (validationStack.validate()) {
+  if (validation.validate()) {
     console.log('Submit');
   }
 };
@@ -160,14 +158,6 @@ const submit = () => {
     Submit
   </button>
 </template>
-```
-
-Form + Table
-
-```js
-if (validator.validateAll(validation1, validation2)) {
-  // ...
-}
 ```
 
 ### Built-in Rules
@@ -297,8 +287,6 @@ const validation = useValidation(
 
 ### Validation schemas with `yup`
 
-TODO:
-
 ```ts
 import { computed, reactive } from 'vue';
 import { useSchema } from 'vue-formor';
@@ -306,20 +294,68 @@ import { setLocale, string } from 'yup';
 
 setLocale({
   mixed: {
-    required: 'This field is required',
+    required: 'This is a required field',
   },
 });
 
 const state = reactive({
   searchForm: {
     employeeId: '',
+    employeeName: '',
   },
+  dataTable: [
+    { firstField: '', secondField: 'O' },
+    { firstField: 'O', secondField: '' },
+    { firstField: '', secondField: '' },
+  ],
+  nestedTable: [
+    {
+      parent: '',
+      children: [
+        { firstField: '', secondField: 'O' },
+        { firstField: 'O', secondField: '' },
+        { firstField: '', secondField: '' },
+      ],
+    },
+    {
+      parent: 'O',
+      children: [
+        { firstField: 'O', secondField: 'O' },
+        { firstField: 'O', secondField: 'O' },
+        { firstField: '', secondField: '' },
+      ],
+    },
+  ],
   errors: {},
 });
 
 const schema = useSchema(
   [
     [computed(() => state.searchForm.employeeId), string().required()],
+    [
+      computed(() => state.searchForm.employeeName),
+      computed(() => state.searchForm.employeeId ? string().nullable() : string().required()),
+    ],
+    [
+      computed(() => state.dataTable),
+      (row, idx) => [
+        [computed(() => row.firstField), string().required()],
+        [computed(() => row.secondField), string().required()],
+      ],
+    ],
+    [
+      computed(() => state.nestedTable),
+      (row, idx) => [
+        [computed(() => row.parent), string().required()],
+        [
+          computed(() => row.children),
+          (subRow, subIdx) => [
+            [computed(() => subRow.firstField), string().required()],
+            [computed(() => subRow.secondField), string().required()],
+          ],
+        ],
+      ],
+    ],
   ],
   state,
 );
@@ -329,7 +365,26 @@ const submit = () => {
     // passed
   } else {
     // failed
-    console.log(state.errors['searchForm.employeeId']); // This field is required
+    console.log(state.errors);
+
+    console.log(state.errors['searchForm.employeeId']); // This is a required field
+    console.log(state.errors['searchForm.employeeName']); // This is a required field
+
+    console.log(state.errors['dataTable[0].firstField']);
+    console.log(state.errors['dataTable[0].secondField']);
+    console.log(state.errors['dataTable[1].firstField']);
+    console.log(state.errors['dataTable[1].secondField']);
+
+    console.log(state.errors['nestedTable[0].parent']);
+    console.log(state.errors['nestedTable[0].children[0].firstField']);
+    console.log(state.errors['nestedTable[0].children[0].secondField']);
+    console.log(state.errors['nestedTable[0].children[1].firstField']);
+    console.log(state.errors['nestedTable[0].children[1].secondField']);
+    console.log(state.errors['nestedTable[1].parent']);
+    console.log(state.errors['nestedTable[1].children[0].firstField']);
+    console.log(state.errors['nestedTable[1].children[0].secondField']);
+    console.log(state.errors['nestedTable[1].children[1].firstField']);
+    console.log(state.errors['nestedTable[1].children[1].secondField']);
   }
 };
 ```
@@ -351,10 +406,6 @@ export interface Rules {
   maxLength(min: number): ValFunc;
 }
 
-export interface Validator {
-  validateAll(...validations: Validation[]): boolean;
-}
-
 export type UseValidator = Rules & Validator;
 ```
 
@@ -369,3 +420,5 @@ Create form validation
 ```
 
 Type: `useValidation(fields, storeIn)`
+
+### `useSchema`
