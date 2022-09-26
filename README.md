@@ -20,7 +20,14 @@ const { useValidator, useValidation, useSchema } = require('vue-formor');
 import { useValidator, useValidation, useSchema } from 'vue-formor';
 ```
 
+## Examples
+
+- vue
+- [nuxt](./examples/nuxt)
+
 ## Getting Started
+
+Form:
 
 ```vue
 <script setup>
