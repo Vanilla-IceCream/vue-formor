@@ -16,6 +16,9 @@
       <li>
         <NuxtLink to="/tabular-form-groups">Tabular Form Groups</NuxtLink>
       </li>
+      <li>
+        <NuxtLink to="/custom-schemas">Custom Schemas</NuxtLink>
+      </li>
     </ul>
   </div>
 </template>
