@@ -4,13 +4,13 @@ specifiers:
   '@pinia/nuxt': ^0.4.2
   nuxt: 3.0.0-rc.11
   pinia: ^2.0.22
-  vue-formor: ^2.0.0
+  vue-formor: ^2.0.2
   yup: ^0.32.11
 
 dependencies:
   '@pinia/nuxt': 0.4.2
   pinia: 2.0.22
-  vue-formor: 2.0.0
+  vue-formor: 2.0.2
   yup: 0.32.11
 
 devDependencies:
@@ -4260,10 +4260,8 @@ packages:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
     dev: true
 
-  /vue-formor/2.0.0:
-    resolution: {integrity: sha512-fg1WkGlWVcSBn3ToRdeKU0CbxP9resDxAbV0FBRDa4xHeRtEXnX814SGhvvwoC/PQKH3I4DRCwvFK0AgzsWQdQ==}
-    peerDependencies:
-      vue: '>= 3.2 < 4'
+  /vue-formor/2.0.2:
+    resolution: {integrity: sha512-3SKYCMRGA6AUvmATqZ9JkrdIwmsClSzzbBDHTGIxDw6DoA4g0+wAvcIx3xWJ7aFiTmsWfa1GIOsfy8SHMk4vVA==}
     dependencies:
       message-interpolation: 1.0.1
     dev: false

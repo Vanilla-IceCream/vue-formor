@@ -1,15 +1,22 @@
 {
   "name": "vue-formor",
-  "version": "2.0.1",
+  "type": "module",
+  "version": "2.0.2",
   "description": "Form validation for Vue in composition functions.",
-  "main": "dist/vue-formor.cjs.js",
-  "module": "dist/vue-formor.esm.js",
+  "main": "./dist/vue-formor.umd.cjs",
+  "module": "./dist/vue-formor.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-formor.js",
+      "require": "./dist/vue-formor.umd.cjs"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "jest --coverage",
-    "build": "rollup -c",
+    "build": "vite build",
     "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
@@ -50,6 +57,7 @@
     "jest-serializer-vue": "^2.0.2",
     "prettier": "^2.3.2",
     "rollup": "^2.56.2",
+    "vite": "^3.1.4",
     "vue": "^3.2.11",
     "vue-jest": "^5.0.0-alpha.10"
   }
