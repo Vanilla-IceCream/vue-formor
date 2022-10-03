@@ -16,7 +16,7 @@
 
   <template>
     <div>
-      <div>State Management >> Dependency Injection</div>
+      <div>State Management >> Pinia Integration</div>
 
       <div>
         <div>

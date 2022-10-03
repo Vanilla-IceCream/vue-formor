@@ -22,8 +22,8 @@ import { useValidator, useValidation, useSchema } from 'vue-formor';
 
 ## Examples
 
-- vue
-- [nuxt](./examples/nuxt)
+- [Vue](./examples/vue)
+- [Nuxt](./examples/nuxt)
 
 ## Getting Started
 
