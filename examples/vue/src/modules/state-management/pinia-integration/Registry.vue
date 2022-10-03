@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { useStore } from './-src/store';
-import { useBasicFormsSchema } from './-src/schema';
+import { reactive } from 'vue';
+
+import { useStore } from './store';
+import { useBasicFormsSchema } from './schema';
 
 const store = useStore();
 const schema = useBasicFormsSchema();

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, reactive } from 'vue';
 import { useSchema } from 'vue-formor';
 import { setLocale, string } from 'yup';
 
@@ -15,8 +16,8 @@ setLocale({
 const state = reactive({
   fooForm: {} as Forms,
   barForm: {} as Forms,
-  fooErrors: {},
-  barErrors: {},
+  fooErrors: {} as Record<string, string>,
+  barErrors: {} as Record<string, string>,
 });
 
 const fooSchema = useSchema([

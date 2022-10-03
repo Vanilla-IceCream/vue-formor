@@ -5,7 +5,7 @@ export const messageSymbol = Symbol('messages');
 export const ruleSymbol = Symbol('rule');
 
 const getRawKeys = (val) => {
-  const func = val.expression || val.raw || val.fn; // Vue 2 || < Vue 3.2 || >= Vue 3.2
+  const func = val.expression || val.raw || val.fn;
 
   const keys = func
     .toString()

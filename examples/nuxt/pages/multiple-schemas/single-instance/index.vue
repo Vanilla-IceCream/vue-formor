@@ -45,7 +45,7 @@ const baeSubmit = () => {
 
 <template>
   <div>
-    <div>Multiple Schemas (Single-instance)</div>
+    <div>Multiple Schemas >> Multiple Schemas (Single-instance)</div>
 
     <div>
       <div>

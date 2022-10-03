@@ -5,9 +5,9 @@ Form validation for Vue in composition functions.
 ## Installation and Usage
 
 ```sh
-$ npm i vue-formor -S
+$ npm i vue-formor
 # or
-$ pnpm i vue-formor -S
+$ pnpm i vue-formor
 # or
 $ yarn add vue-formor
 ```
@@ -25,9 +25,9 @@ import { useValidator, useValidation, useSchema } from 'vue-formor';
 - [Vue](./examples/vue)
 - [Nuxt](./examples/nuxt)
 
-## Getting Started
+## Guide
 
-Form:
+### Basics
 
 ```vue
 <script setup>
@@ -80,7 +80,7 @@ const signIn = () => {
 </template>
 ```
 
-Iterator:
+### Iterator
 
 ```vue
 <script setup>
@@ -396,7 +396,7 @@ const submit = () => {
 };
 ```
 
-## API
+## API Reference
 
 ### `useValidator`
 
@@ -423,9 +423,35 @@ Type: `useValidator(): UseValidator`
 Create form validation
 
 ```ts
+const validation = useValidation(
+  [
+    // fields
+  ],
+  // storeIn
+);
 
+validation.validate(); // return Boolean
+
+validation.stop();
 ```
 
 Type: `useValidation(fields, storeIn)`
 
 ### `useSchema`
+
+Create `yup` schema
+
+```ts
+const schema = useSchema(
+  [
+    // fields
+  ],
+  // storeIn
+);
+
+schema.validate(); // return Boolean
+
+schema.stop();
+```
+
+Type: `useSchema(fields, storeIn)`

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { computed, reactive } from 'vue';
 import { useSchema } from 'vue-formor';
 import { setLocale, string } from 'yup';
 
@@ -15,25 +16,28 @@ setLocale({
 const state = reactive({
   fooForm: {} as Forms,
   barForm: {} as Forms,
-  fooErrors: {},
-  barErrors: {},
+  errors: {} as Record<string, string>,
 });
 
 const fooSchema = useSchema([
   [computed(() => state.fooForm.text), string().required()],
-], state, 'fooErrors');
+], state);
 
 const barSchema = useSchema([
   [computed(() => state.barForm.text), string().required()],
-], state, 'barErrors');
+], state);
 
 const fooSubmit = () => {
+  barSchema.stop();
+
   if (fooSchema.validate()) {
     // passed
   }
 };
 
 const baeSubmit = () => {
+  fooSchema.stop();
+
   if (barSchema.validate()) {
     // passed
   }
@@ -42,19 +46,19 @@ const baeSubmit = () => {
 
 <template>
   <div>
-    <div>Multiple Schemas >> Multiple Schemas (Multiple-instance)</div>
+    <div>Multiple Schemas >> Multiple Schemas (Single-instance)</div>
 
     <div>
       <div>
         <label for="foo">Foo:</label>
         <input id="foo" type="text" v-model="state.fooForm.text">
-        <div>{{ state.fooErrors['fooForm.text'] }}</div>
+        <div>{{ state.errors['fooForm.text'] }}</div>
       </div>
 
       <div>
         <label for="bar">Bar:</label>
         <input id="bar" type="text" v-model="state.barForm.text">
-        <div>{{ state.barErrors['barForm.text'] }}</div>
+        <div>{{ state.errors['barForm.text'] }}</div>
       </div>
 
       <button @click="fooSubmit">Foo</button>
@@ -71,14 +75,6 @@ const baeSubmit = () => {
       <pre>{{ state.barForm }}</pre>
     </div>
 
-    <div>
-      fooErrors:
-      <pre>{{ state.fooErrors }}</pre>
-    </div>
-
-    <div>
-      barErrors:
-      <pre>{{ state.barErrors }}</pre>
-    </div>
+    <pre>{{ state.errors }}</pre>
   </div>
 </template>
