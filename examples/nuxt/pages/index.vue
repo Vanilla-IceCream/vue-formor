@@ -19,6 +19,18 @@
       <li>
         <NuxtLink to="/custom-schemas">Custom Schemas</NuxtLink>
       </li>
+
+      <li>
+        State Management
+        <ul>
+          <li>
+            <NuxtLink to="/state-management/dependency-injection">Dependency Injection</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/state-management/pinia-integration">Pinia Integration</NuxtLink>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 </template>
