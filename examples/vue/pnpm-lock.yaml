@@ -6,7 +6,7 @@ specifiers:
   typescript: ^4.6.4
   vite: ^3.1.0
   vue: ^3.2.37
-  vue-formor: ^2.0.2
+  vue-formor: ^3.0.0
   vue-router: ^4.1.5
   vue-tsc: ^0.40.4
   yup: ^0.32.11
@@ -14,7 +14,7 @@ specifiers:
 dependencies:
   pinia: 2.0.22_bfjwoga25wxjazzogo7o372nwq
   vue: 3.2.40
-  vue-formor: 2.0.2
+  vue-formor: 3.0.0
   vue-router: 4.1.5_vue@3.2.40
   yup: 0.32.11
 
@@ -475,10 +475,6 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
 
-  /message-interpolation/1.0.1:
-    resolution: {integrity: sha512-yP5DgTNu16op1b3k04AY8aMii/IsI4yjFH0oh8SZriP0D4UMu9MObhQhRmUcEAE/5SRu/69m3OKUhgJbKz3M9A==}
-    dev: false
-
   /nanoclone/0.2.1:
     resolution: {integrity: sha512-wynEP02LmIbLpcYw8uBKpcfF6dmg2vcpKqxeH5UcoKEYdExslsdUA4ugFauuaeYdTB76ez6gJW8XAZ6CgkXYxA==}
     dev: false
@@ -625,10 +621,8 @@ packages:
       vue: 3.2.40
     dev: false
 
-  /vue-formor/2.0.2:
-    resolution: {integrity: sha512-3SKYCMRGA6AUvmATqZ9JkrdIwmsClSzzbBDHTGIxDw6DoA4g0+wAvcIx3xWJ7aFiTmsWfa1GIOsfy8SHMk4vVA==}
-    dependencies:
-      message-interpolation: 1.0.1
+  /vue-formor/3.0.0:
+    resolution: {integrity: sha512-mMjbLH0w5h/T9J62bioplGb7U3emolDj+6G3ZYTWwWt904unrGKWaIzDX/TZbLowwktVRW5BNYBfp5iBh4PEoQ==}
     dev: false
 
   /vue-router/4.1.5_vue@3.2.40:

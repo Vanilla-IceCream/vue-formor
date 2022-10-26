@@ -11,7 +11,7 @@
   "dependencies": {
     "pinia": "^2.0.22",
     "vue": "^3.2.37",
-    "vue-formor": "^2.0.2",
+    "vue-formor": "^3.0.0",
     "vue-router": "^4.1.5",
     "yup": "^0.32.11"
   },

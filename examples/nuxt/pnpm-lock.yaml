@@ -4,13 +4,13 @@ specifiers:
   '@pinia/nuxt': ^0.4.2
   nuxt: 3.0.0-rc.11
   pinia: ^2.0.22
-  vue-formor: ^2.0.2
+  vue-formor: ^3.0.0
   yup: ^0.32.11
 
 dependencies:
   '@pinia/nuxt': 0.4.2
   pinia: 2.0.22
-  vue-formor: 2.0.2
+  vue-formor: 3.0.0
   yup: 0.32.11
 
 devDependencies:
@@ -2584,10 +2584,6 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
-  /message-interpolation/1.0.1:
-    resolution: {integrity: sha512-yP5DgTNu16op1b3k04AY8aMii/IsI4yjFH0oh8SZriP0D4UMu9MObhQhRmUcEAE/5SRu/69m3OKUhgJbKz3M9A==}
-    dev: false
-
   /micromatch/4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
@@ -4260,10 +4256,8 @@ packages:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
     dev: true
 
-  /vue-formor/2.0.2:
-    resolution: {integrity: sha512-3SKYCMRGA6AUvmATqZ9JkrdIwmsClSzzbBDHTGIxDw6DoA4g0+wAvcIx3xWJ7aFiTmsWfa1GIOsfy8SHMk4vVA==}
-    dependencies:
-      message-interpolation: 1.0.1
+  /vue-formor/3.0.0:
+    resolution: {integrity: sha512-mMjbLH0w5h/T9J62bioplGb7U3emolDj+6G3ZYTWwWt904unrGKWaIzDX/TZbLowwktVRW5BNYBfp5iBh4PEoQ==}
     dev: false
 
   /vue-router/4.1.5_vue@3.2.39:
