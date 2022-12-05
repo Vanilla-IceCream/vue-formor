@@ -7,11 +7,11 @@ This branch refers to the vue-formor v3 release. Check out the [v2](https://gith
 ## Installation and Usage
 
 ```sh
-$ npm i vue-formor
+$ npm i vue-formor yup
 # or
-$ pnpm i vue-formor
+$ pnpm i vue-formor yup
 # or
-$ yarn add vue-formor
+$ yarn add vue-formor yup
 ```
 
 ```js
@@ -24,8 +24,17 @@ const { useSchema } = require('vue-formor');
 
 ## Examples
 
-- [Vue](./examples/vue)
-- [Nuxt](./examples/nuxt)
+- [Basic Forms](./examples/vue/src/modules/basic-forms/Registry.vue)
+- [Dynamic Forms](./examples/vue/src/modules/dynamic-forms/Registry.vue)
+- [Tabular Forms](./examples/vue/src/modules/tabular-forms/Registry.vue)
+- [Tabular Form Groups](./examples/vue/src/modules/tabular-form-groups/Registry.vue)
+- [Custom Schemas](./examples/vue/src/modules/custom-schemas/Registry.vue)
+- State Management
+  - [Dependency Injection](./examples/vue/src/modules/state-management/dependency-injection)
+  - [Pinia Integration](./examples/vue/src/modules/state-management/pinia-integration)
+- Multiple Schemas
+  - [Single-instance](./examples/vue/src/modules/multiple-schemas/single-instance/Registry.vue)
+  - [Multiple-instance](./examples/vue/src/modules/multiple-schemas/multiple-instance/Registry.vue)
 
 ## Guide
 

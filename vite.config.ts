@@ -1,5 +1,6 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
@@ -17,5 +18,8 @@ export default defineConfig({
       },
     },
   },
-  plugins: [dts()],
+  plugins: [vue(), dts()],
+  test: {
+    environment: 'happy-dom',
+  },
 });

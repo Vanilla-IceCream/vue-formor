@@ -1,26 +1,11 @@
+import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-import Form from './fixtures/Form.vue';
-import TabularForm from './fixtures/TabularForm.vue';
-import DynamicRules from './fixtures/DynamicRules.vue';
-
-process.chdir(__dirname);
+import BasicForm from './fixtures/BasicForm.vue';
 
 describe('vue-formor', () => {
-  it('Form', () => {
-    const wrapper = mount(Form, {});
-
-    expect(wrapper.html()).toMatchSnapshot();
-  });
-
-  it('TabularForm', () => {
-    const wrapper = mount(TabularForm, {});
-
-    expect(wrapper.html()).toMatchSnapshot();
-  });
-
-  it('DynamicRules', () => {
-    const wrapper = mount(DynamicRules, {});
+  it('BasicForm', () => {
+    const wrapper = mount(BasicForm, {});
 
     expect(wrapper.html()).toMatchSnapshot();
   });

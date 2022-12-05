@@ -1,0 +1,15 @@
+// Vitest Snapshot v1
+
+exports[`vue-formor > BasicForm 1`] = `
+"<div>
+  <div>Basic Forms</div>
+  <div>
+    <div><label for=\\"email\\">Email:</label><input id=\\"email\\" type=\\"email\\">
+      <div></div>
+    </div>
+    <div><label for=\\"password\\">Password:</label><input id=\\"password\\" type=\\"password\\">
+      <div></div>
+    </div><button>Sign in</button>
+  </div><pre>{}</pre><pre>{}</pre>
+</div>"
+`;
