@@ -185,18 +185,31 @@ const submit = () => {
 ### Internationalization
 
 ```js
-const { t } = useI18n({ useScope: 'global' });
+// src/path/to/schema.ts
+import { computed } from 'vue';
+import { useSchema } from 'vue-formor';
+import { useI18n } from 'vue-i18n';
+import { string } from 'yup';
 
-const schema = useSchema(
-  [
-    [computed(() => state.signInForm.username), computed(() => string().required(t('required')))],
+import { useState } from './provider';
+
+export const useSignInFormSchema = () => {
+  const { t } = useI18n({ useScope: 'global' });
+  const state = useState();
+
+  const schema = useSchema(
     [
-      computed(() => state.signInForm.password),
-      computed(() => string().required(t('required')).min(8, t('string.min'))),
+      [computed(() => state.signInForm.username), computed(() => string().required(t('required')))],
+      [
+        computed(() => state.signInForm.password),
+        computed(() => string().required(t('required')).min(8, t('string.min'))),
+      ],
     ],
-  ],
-  state,
-);
+    state,
+  );
+
+  return schema;
+};
 ```
 
 ## API Reference

@@ -8,11 +8,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.11"
+    "nuxt": "^3.0.0"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.4.2",
-    "pinia": "^2.0.22",
+    "@pinia/nuxt": "^0.4.6",
     "vue-formor": "^3.0.0",
     "yup": "^0.32.11"
   }

@@ -1,5 +1,3 @@
-import { reactive, provide, inject } from 'vue';
-
 import type { State } from './type';
 
 export const stateSymbol = Symbol('/state-management/dependency-injection');

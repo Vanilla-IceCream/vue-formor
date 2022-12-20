@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useStore } from './-src/store';
-import { useBasicFormsSchema } from './-src/schema';
+import { useStore } from './_includes/store';
+import { useBasicFormsSchema } from './_includes/schema';
 
 const store = useStore();
 const schema = useBasicFormsSchema();

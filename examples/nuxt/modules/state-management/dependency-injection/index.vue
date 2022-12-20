@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import provider from './-src/store';
-import Injector from './-src/BasicForms.vue';
+import provider from './_includes/store';
+import Injector from './_includes/BasicForms.vue';
 
 provider();
 </script>

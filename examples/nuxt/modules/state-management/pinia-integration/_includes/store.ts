@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia';
-
 import { State } from './type';
 
 export const useStore = defineStore('/state-management/pinia-integration', {
