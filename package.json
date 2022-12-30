@@ -16,9 +16,8 @@
     }
   },
   "scripts": {
-    "test": "vitest --run --coverage",
     "build": "vite build",
-    "coverage": "cat ./coverage/lcov.info | coveralls"
+    "test": "vitest --run --coverage"
   },
   "repository": {
     "type": "git",

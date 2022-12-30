@@ -1,15 +1,47 @@
 // Vitest Snapshot v1
 
-exports[`vue-formor > BasicForm 1`] = `
+exports[`BasicForm 1`] = `
 "<div>
   <div>Basic Forms</div>
   <div>
     <div><label for=\\"email\\">Email:</label><input id=\\"email\\" type=\\"email\\">
-      <div></div>
+      <div>This must be a valid email</div>
     </div>
     <div><label for=\\"password\\">Password:</label><input id=\\"password\\" type=\\"password\\">
-      <div></div>
+      <div>This is a required field</div>
     </div><button>Sign in</button>
-  </div><pre>{}</pre><pre>{}</pre>
+  </div><pre>{
+  \\"email\\": \\"text\\"
+}</pre><pre>{
+  \\"basicForms.email\\": \\"This must be a valid email\\",
+  \\"basicForms.password\\": \\"This is a required field\\"
+}</pre>
+</div>"
+`;
+
+exports[`TabularForm 1`] = `
+"<div>
+  <div>Tabular Forms</div><pre>{
+  \\"dataTable[0].secondField\\": \\"This is a required field\\",
+  \\"dataTable[1].firstField\\": \\"This is a required field\\",
+  \\"dataTable[3].firstField\\": \\"This is a required field\\",
+  \\"dataTable[3].secondField\\": \\"This is a required field\\"
+}</pre>
+</div>"
+`;
+
+exports[`TabularFormGroup 1`] = `
+"<div>
+  <div>Tabular Form Groups</div><pre>{
+  \\"listGroup[0].children[0].secondField\\": \\"This is a required field\\",
+  \\"listGroup[0].children[1].firstField\\": \\"This is a required field\\",
+  \\"listGroup[0].children[3].firstField\\": \\"This is a required field\\",
+  \\"listGroup[0].children[3].secondField\\": \\"This is a required field\\",
+  \\"listGroup[1].parent\\": \\"This is a required field\\",
+  \\"listGroup[1].children[0].firstField\\": \\"This is a required field\\",
+  \\"listGroup[1].children[1].secondField\\": \\"This is a required field\\",
+  \\"listGroup[1].children[2].firstField\\": \\"This is a required field\\",
+  \\"listGroup[1].children[2].secondField\\": \\"This is a required field\\"
+}</pre>
 </div>"
 `;

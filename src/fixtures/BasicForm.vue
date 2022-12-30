@@ -23,10 +23,13 @@ const state = reactive({
   errors: {} as Record<string, string>,
 });
 
-const schema = useSchema([
-  [computed(() => state.basicForms.email), string().required().email()],
-  [computed(() => state.basicForms.password), string().required().min(8)],
-], state);
+const schema = useSchema(
+  [
+    [computed(() => state.basicForms.email), string().required().email()],
+    [computed(() => state.basicForms.password), string().required().min(8)],
+  ],
+  state,
+);
 
 const signIn = () => {
   if (schema.validate()) {
@@ -42,13 +45,13 @@ const signIn = () => {
     <div>
       <div>
         <label for="email">Email:</label>
-        <input id="email" type="email" v-model="state.basicForms.email">
+        <input id="email" type="email" v-model="state.basicForms.email" />
         <div>{{ state.errors['basicForms.email'] }}</div>
       </div>
 
       <div>
         <label for="password">Password:</label>
-        <input id="password" type="password" v-model="state.basicForms.password">
+        <input id="password" type="password" v-model="state.basicForms.password" />
         <div>{{ state.errors['basicForms.password'] }}</div>
       </div>
 

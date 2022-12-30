@@ -9,9 +9,11 @@ This branch refers to the vue-formor v3 release. Check out the [v2](https://gith
 ```sh
 $ npm i vue-formor yup
 # or
+$ yarn add vue-formor yup
+# or
 $ pnpm i vue-formor yup
 # or
-$ yarn add vue-formor yup
+$ bun add vue-formor yup
 ```
 
 ```js
@@ -35,6 +37,7 @@ const { useSchema } = require('vue-formor');
 - Multiple Schemas
   - [Single-instance](./examples/vue/src/modules/multiple-schemas/single-instance/Registry.vue)
   - [Multiple-instance](./examples/vue/src/modules/multiple-schemas/multiple-instance/Registry.vue)
+- [Also Nuxt](./examples/nuxt)
 
 ## Guide
 
@@ -184,7 +187,9 @@ const submit = () => {
 
 ### Internationalization
 
-```js
+#### `vue-i18n`
+
+```ts
 // src/path/to/schema.ts
 import { computed } from 'vue';
 import { useSchema } from 'vue-formor';
@@ -212,11 +217,61 @@ export const useSignInFormSchema = () => {
 };
 ```
 
+#### `vue-localer`
+
+```ts
+// src/composables/useValidationMessages/index.ts
+import { defineLocale } from 'vue-localer';
+
+import enUS from './en-US';
+
+export default defineLocale('validation-messages', {
+  'en-US': enUS,
+  'ja-JP': () => import('./ja-JP'),
+  'ko-KR': () => import('./ko-KR'),
+  'zh-TW': () => import('./zh-TW'),
+});
+```
+
+```ts
+// src/path/to/schema.ts
+import { computed } from 'vue';
+import { useSchema } from 'vue-formor';
+import { string } from 'yup';
+
+import useValidationMessages from '~/composables/useValidationMessages';
+
+import { useState } from './provider';
+
+export const useSignInFormSchema = () => {
+  const messages = useValidationMessages();
+  const state = useState();
+
+  const schema = useSchema(
+    [
+      [
+        computed(() => state.signInForm.username),
+        computed(() => string().required(messages.value.required)),
+      ],
+      [
+        computed(() => state.signInForm.password),
+        computed(() =>
+          string().required(messages.value.required).min(8, messages.value.string?.min),
+        ),
+      ],
+    ],
+    state,
+  );
+
+  return schema;
+};
+```
+
 ## API Reference
 
 ### `useSchema`
 
-Create `yup` schema
+Create `yup` validation schema
 
 ```ts
 const schema = useSchema(
