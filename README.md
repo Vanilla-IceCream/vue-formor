@@ -1,30 +1,36 @@
 # vue-formor
 
-Form validation for Vue in composition functions with Yup.
+Form validation for Vue in composition functions with Yup or Zod.
 
 This branch refers to the vue-formor v3 release. Check out the [v2](https://github.com/Vanilla-IceCream/vue-formor/tree/v2) branch for v2.
 
-## Installation and Usage
+## Installation
+
+Install `vue-formor` with your favorite package manager:
 
 ```sh
-$ npm i vue-formor yup
+$ npm i vue-formor
 # or
-$ yarn add vue-formor yup
+$ yarn add vue-formor
 # or
-$ pnpm i vue-formor yup
+$ pnpm i vue-formor
 # or
-$ bun add vue-formor yup
+$ bun add vue-formor
 ```
+
+## Usage
 
 ```js
 // esm
-import { useSchema } from 'vue-formor';
+import { useYupSchema, useZodSchema } from 'vue-formor';
 
 // cjs
-const { useSchema } = require('vue-formor');
+const { useYupSchema, useZodSchema } = require('vue-formor');
 ```
 
 ## Examples
+
+[Online Demo](https://vue-starter-6fa6.onrender.com/data-entry/form-validation) | [Demo Code](https://github.com/Shyam-Chen/Vue-Starter/tree/main/src/modules/data-entry/form-validation)
 
 - [Basic Forms](./examples/vue/src/modules/basic-forms/Registry.vue)
 - [Dynamic Forms](./examples/vue/src/modules/dynamic-forms/Registry.vue)

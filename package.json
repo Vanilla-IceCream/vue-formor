@@ -1,7 +1,7 @@
 {
   "name": "vue-formor",
-  "version": "3.0.0",
-  "description": "Form validation for Vue in composition functions with Yup.",
+  "version": "3.1.0",
+  "description": "Form validation for Vue in composition functions with Yup or Zod.",
   "main": "./dist/vue-formor.umd.cjs",
   "module": "./dist/vue-formor.js",
   "types": "./dist/vue-formor.d.ts",

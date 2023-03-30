@@ -130,3 +130,7 @@ export const useSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') =
     stop,
   };
 };
+
+export const useYupSchema = useSchema;
+
+export { useZodSchema } from './useZodSchema';
