@@ -3,6 +3,8 @@ import { computed, reactive } from 'vue';
 import { useSchema } from 'vue-formor';
 import { setLocale, addMethod, string } from 'yup';
 
+import ZodForm from './ZodForm.vue';
+
 interface CustomSchemas {
   name: string;
 }
@@ -15,7 +17,7 @@ setLocale({
 
 addMethod(string, 'letters', function () {
   return this.test('letters', 'This must contain only letters', (value) => {
-    if (value && !(/^[A-Za-z]+$/.test(value))) return false
+    if (value && !/^[A-Za-z]+$/.test(value)) return false;
     return true;
   });
 });
@@ -25,9 +27,10 @@ const state = reactive({
   errors: {} as Record<string, string>,
 });
 
-const schema = useSchema([
-  [computed(() => state.customSchemas.name), string().required().letters()],
-], state);
+const schema = useSchema(
+  [[computed(() => state.customSchemas.name), string().required().letters()]],
+  state,
+);
 
 const submit = () => {
   if (schema.validate()) {
@@ -43,7 +46,7 @@ const submit = () => {
     <div>
       <div>
         <label for="name">Name:</label>
-        <input id="name" type="text" v-model="state.customSchemas.name">
+        <input id="name" type="text" v-model="state.customSchemas.name" />
         <div>{{ state.errors['customSchemas.name'] }}</div>
       </div>
 
@@ -53,5 +56,7 @@ const submit = () => {
     <pre>{{ state.customSchemas }}</pre>
 
     <pre>{{ state.errors }}</pre>
+
+    <ZodForm />
   </div>
 </template>

@@ -3,6 +3,8 @@ import { computed, reactive } from 'vue';
 import { useSchema } from 'vue-formor';
 import { setLocale, string } from 'yup';
 
+import ZodForm from './ZodForm.vue';
+
 interface DynamicForms {
   language: string;
   preprocessor: string;
@@ -77,5 +79,9 @@ const submit = () => {
     <pre>{{ state.dynamicForms }}</pre>
 
     <pre>{{ state.errors }}</pre>
+
+    <hr>
+
+    <ZodForm />
   </div>
 </template>
