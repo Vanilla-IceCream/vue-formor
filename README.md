@@ -179,6 +179,9 @@ const signIn = () => {
 
 ### Iterators
 
+<details>
+  <summary>useYupSchema</summary>
+
 ```vue
 <script lang="ts" setup>
 import { computed, reactive } from 'vue';
@@ -259,9 +262,14 @@ const submit = () => {
 </template>
 ```
 
+</details>
+
 ### Internationalization
 
 #### `vue-i18n`
+
+<details>
+  <summary>useYupSchema</summary>
 
 ```ts
 // src/path/to/schema.ts
@@ -291,7 +299,12 @@ export const useSignInFormSchema = () => {
 };
 ```
 
+</details>
+
 #### `vue-localer`
+
+<details>
+  <summary>useYupSchema</summary>
 
 ```ts
 // src/composables/useValidationMessages/index.ts
@@ -341,6 +354,8 @@ export const useSignInFormSchema = () => {
 };
 ```
 
+</details>
+
 ## API Reference
 
 ### `useSchema`
@@ -361,3 +376,36 @@ schema.stop();
 ```
 
 Type: `useSchema(fields, storeIn, errorsKey)`
+
+### `useYupSchema`
+
+Create `yup` validation schema
+
+```ts
+const schema = useYupSchema(
+  [
+    // fields
+  ],
+  // storeIn
+);
+
+schema.validate(); // return Boolean
+
+schema.stop();
+```
+
+Type: `useYupSchema(fields, storeIn, errorsKey)`
+
+### `useZodSchema`
+
+Create `zod` validation schema
+
+```ts
+const schema = useZodSchema(/* ... */);
+
+schema.validate(); // return Boolean
+
+schema.stop();
+```
+
+Type: `useZodSchema(schema: ZodSchema, target: Ref, errors: Ref)`
