@@ -1,21 +1,22 @@
 import { watch, onUnmounted } from 'vue';
 
-const getRawKeys = (val) => {
+const getRawKeys = (val: any) => {
   const func = val.expression || val.raw || val.fn;
 
   const keys = func
     .toString()
     .split('.')
-    .map((item) => item.replace(/;|\n|}/g, '').trim());
+    .map((item: any) => item.replace(/;|\n|}/g, '').trim());
 
   keys.splice(0, 1);
 
   return keys.join('.');
 };
 
-const debounce = (fn, ms = 0) => {
-  let timeoutId;
-  return function (...args) {
+const debounce = (fn: Function, ms = 300) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  return function (this: any, ...args: any[]) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
@@ -41,7 +42,7 @@ export const useSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') =
 
         try {
           _schema.validateSync(val.value);
-        } catch (error) {
+        } catch (error: any) {
           storeIn[errorsKey][fieldKey] = error.message;
         }
       }
@@ -62,7 +63,7 @@ export const useSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') =
 
               try {
                 _rowSchema.validateSync(rowVal.value);
-              } catch (error) {
+              } catch (error: any) {
                 storeIn[errorsKey][`${fieldKey}[${j}].${rowFieldKey}`] = error.message;
               }
             }
@@ -83,7 +84,7 @@ export const useSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') =
 
                     try {
                       _subRowSchema.validateSync(subRowVal.value);
-                    } catch (error) {
+                    } catch (error: any) {
                       storeIn[errorsKey][
                         `${fieldKey}[${j}].${rowFieldKey}[${l}].${subRowFieldKey}`
                       ] = error.message;

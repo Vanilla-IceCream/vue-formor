@@ -28,9 +28,11 @@ import { useYupSchema, useZodSchema } from 'vue-formor';
 const { useYupSchema, useZodSchema } = require('vue-formor');
 ```
 
-## Examples
+## Documentation
 
-[Online Demo](https://vue-starter-6fa6.onrender.com/data-entry/form-validation) | [Demo Code](https://github.com/Shyam-Chen/Vue-Starter/tree/main/src/modules/data-entry/form-validation)
+To learn more about `vue-formor`, check [its documentation](https://vitesheet.onrender.com/vue-formor/).
+
+## Examples
 
 - [Basic Forms](./examples/vue/src/modules/basic-forms/Registry.vue)
 - [Dynamic Forms](./examples/vue/src/modules/dynamic-forms/Registry.vue)
