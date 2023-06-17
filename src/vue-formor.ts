@@ -24,7 +24,7 @@ const debounce = (fn: Function, ms = 300) => {
 
 type Field = [any, any];
 
-export const useSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') => {
+export const useYupSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') => {
   let checked = false;
 
   const validate = () => {
@@ -132,6 +132,9 @@ export const useSchema = (fields: Field[], storeIn: any, errorsKey = 'errors') =
   };
 };
 
-export const useYupSchema = useSchema;
+/**
+ * @deprecated Please use useYupSchema instead of useSchema.
+ */
+export const useSchema = useYupSchema;
 
 export { useZodSchema } from './useZodSchema';
