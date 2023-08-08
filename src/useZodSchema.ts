@@ -2,14 +2,7 @@ import type { EffectScope, Ref } from 'vue';
 import type { ZodSchema } from 'zod';
 import { watch, effectScope, onUnmounted } from 'vue';
 
-const debounce = (fn: Function, ms = 300) => {
-  let timeoutId: ReturnType<typeof setTimeout>;
-
-  return function (this: any, ...args: any[]) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
-  };
-};
+import { debounce } from './utils';
 
 export const useZodSchema = (schema: ZodSchema, target: Ref, errors: Ref) => {
   let _scope: EffectScope;

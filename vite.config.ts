@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/vue-formor.ts'),
-      name: 'VueFormor',
+      formats: ['es', 'cjs'],
     },
     rollupOptions: {
       external: ['vue'],
@@ -20,6 +20,7 @@ export default defineConfig({
   },
   plugins: [vue(), dts()],
   test: {
+    globals: true,
     environment: 'happy-dom',
   },
 });
