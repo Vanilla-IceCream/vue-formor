@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.3.4
     version: 3.3.4
   vue-formor:
-    specifier: ^3.2.1
-    version: 3.2.1
+    specifier: link:../../
+    version: link:../..
   vue-router:
     specifier: ^4.2.4
     version: 4.2.4(vue@3.3.4)
@@ -688,10 +688,6 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
-
-  /vue-formor@3.2.1:
-    resolution: {integrity: sha512-fJazNFgXId7wUE0mTMfzRGBM9p5a+zYE4eBk2boATweb9Z9xpxi94tdTQUo8C5Lmb+AqsX2B+ScKrn/H7hMfnw==}
-    dev: false
 
   /vue-router@4.2.4(vue@3.3.4):
     resolution: {integrity: sha512-9PISkmaCO02OzPVOMq2w82ilty6+xJmQrarYZDkjZBfl4RvYAlt4PKnEX21oW4KTtWfa9OuO/b3qk1Od3AEdCQ==}

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "vue": "^3.3.4",
-    "vue-formor": "^3.2.1",
+    "vue-formor": "link:../../",
     "vue-router": "^4.2.4",
     "zod": "^3.21.4"
   },
