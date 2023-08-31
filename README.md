@@ -22,10 +22,10 @@ $ bun add vue-formor
 
 ```js
 // esm
-import { useZodSchema, useYupSchema } from 'vue-formor';
+import { useValibotSchema, useZodSchema, useYupSchema } from 'vue-formor';
 
 // cjs
-const { useZodSchema, useYupSchema } = require('vue-formor');
+const { useValibotSchema, useZodSchema, useYupSchema } = require('vue-formor');
 ```
 
 ## Documentation
@@ -37,6 +37,20 @@ To learn more about `vue-formor`, check [its documentation](https://vitesheet.on
 See [./examples](./examples).
 
 ## API Reference
+
+### `useValibotSchema`
+
+Create `valibot` validation schema
+
+```ts
+const schema = useValibotSchema(/* ... */);
+
+schema.validate(); // return Boolean
+
+schema.stop();
+```
+
+Type: `useValibotSchema(schema: BaseSchema, target: Ref, errors: Ref)`
 
 ### `useZodSchema`
 

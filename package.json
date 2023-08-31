@@ -1,7 +1,7 @@
 {
   "name": "vue-formor",
   "version": "3.2.1",
-  "description": "Form validation for Vue in composition functions with Yup or Zod.",
+  "description": "Form validation for Vue in composition functions with Valibot or Zod or Yup.",
   "main": "./dist/vue-formor.cjs",
   "module": "./dist/vue-formor.js",
   "types": "./dist/src/vue-formor.d.ts",
@@ -29,8 +29,9 @@
     "composition",
     "form",
     "validation",
-    "yup",
+    "valibot",
     "zod",
+    "yup",
     "schema"
   ],
   "author": "Vanilla IceCream",
@@ -40,16 +41,17 @@
   },
   "homepage": "https://github.com/Vanilla-IceCream/vue-formor#readme",
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vitest/coverage-v8": "^0.34.1",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vitest/coverage-v8": "^0.34.3",
     "@vue/test-utils": "^2.4.1",
-    "happy-dom": "^10.9.0",
-    "typescript": "^5.1.6",
+    "happy-dom": "^10.11.2",
+    "typescript": "^5.2.2",
+    "valibot": "^0.13.1",
     "vite": "^4.4.9",
-    "vite-plugin-dts": "^3.5.1",
-    "vitest": "^0.34.1",
+    "vite-plugin-dts": "^3.5.3",
+    "vitest": "^0.34.3",
     "vue": "^3.3.4",
     "yup": "^1.2.0",
-    "zod": "^3.21.4"
+    "zod": "^3.22.2"
   }
 }
