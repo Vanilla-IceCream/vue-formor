@@ -1,36 +1,33 @@
 <script lang="ts" setup>
-import { computed, reactive } from 'vue';
+import { reactive, toRef } from 'vue';
 import { useYupSchema } from 'vue-formor';
-import { string } from 'yup';
+import { object, string } from 'yup';
 
 interface CustomSchemas {
   name: string;
 }
+
+const state = reactive({
+  yupForm: {} as CustomSchemas,
+  yupValdn: {} as Record<string, string>,
+});
 
 const msgs = {
   required: 'This is a required field',
   letters: 'This must contain only letters',
 };
 
-const state = reactive({
-  customSchemas: {} as CustomSchemas,
-  errors: {} as Record<string, string>,
-});
-
 const schema = useYupSchema(
-  [
-    [
-      computed(() => state.customSchemas.name),
-      string()
-        .required(msgs.required)
-        .test('letters', msgs.letters, (value) => {
-          if (value && !/^[A-Za-z]+$/.test(value)) return false;
-          return true;
-        }),
-    ],
-  ],
-  state,
-  'errors',
+  object({
+    name: string()
+      .required(msgs.required)
+      .test('letters', msgs.letters, (value) => {
+        if (value && !/^[A-Za-z]+$/.test(value)) return false;
+        return true;
+      }),
+  }),
+  toRef(state, 'yupForm'),
+  toRef(state, 'yupValdn'),
 );
 
 const submit = () => {
@@ -47,16 +44,16 @@ const submit = () => {
     <form>
       <div class="flex gap-2">
         <label for="name">Name:</label>
-        <input id="name" v-model="state.customSchemas.name" type="text" />
-        <div class="text-red-500">{{ state.errors['customSchemas.name'] }}</div>
+        <input id="name" v-model="state.yupForm.name" type="text" />
+        <div class="text-red-500">{{ state.yupValdn.name }}</div>
       </div>
 
       <button type="button" @click="submit">Submit</button>
     </form>
 
-    <pre>{{ state.customSchemas }}</pre>
+    <pre>{{ state.yupForm }}</pre>
 
-    <pre>{{ state.errors }}</pre>
+    <pre>{{ state.yupValdn }}</pre>
   </fieldset>
 </template>
 

@@ -1,38 +1,38 @@
 <script lang="ts" setup>
-import { computed, reactive } from 'vue';
+import { reactive, toRef } from 'vue';
 import { useYupSchema } from 'vue-formor';
-import { string } from 'yup';
+import { object, string } from 'yup';
 
 interface DynamicForms {
   language: string;
   preprocessor: string;
 }
 
+const state = reactive({
+  zodForm: {} as DynamicForms,
+  zodValdn: {} as Record<string, string>,
+});
+
 const msgs = {
   required: `This is a required field`,
 };
 
-const state = reactive({
-  myForm: {} as DynamicForms,
-  myValdn: {} as Record<string, string>,
-});
-
 const schema = useYupSchema(
-  [
-    [computed(() => state.myForm.language), string().required(msgs.required)],
-    [
-      computed(() => state.myForm.preprocessor),
-      computed(() =>
-        state.myForm.language === 'js' ? string().required(msgs.required) : string().nullable(),
-      ),
-    ],
-  ],
-  state,
-  'myValdn',
+  object({
+    language: string().required(msgs.required),
+    preprocessor: string()
+      .optional()
+      .test('letters', msgs.required, (value) => {
+        if (state.zodForm.language === 'js' && !value) return false;
+        return true;
+      }),
+  }),
+  toRef(state, 'zodForm'),
+  toRef(state, 'zodValdn'),
 );
 
 const changeLanguage = () => {
-  state.myForm.preprocessor = '';
+  state.zodForm.preprocessor = '';
 };
 
 const submit = () => {
@@ -50,14 +50,14 @@ const submit = () => {
       <div class="flex gap-2">
         <label for="language">Language:</label>
 
-        <select id="language" v-model="state.myForm.language" @change="changeLanguage">
+        <select id="language" v-model="state.zodForm.language" @change="changeLanguage">
           <option value="">None</option>
           <option value="html">HTML</option>
           <option value="css">CSS</option>
           <option value="js">JavaScript</option>
         </select>
 
-        <div class="text-red-500">{{ state.myValdn['myForm.language'] }}</div>
+        <div class="text-red-500">{{ state.zodValdn.language }}</div>
       </div>
 
       <div class="flex gap-2">
@@ -65,22 +65,22 @@ const submit = () => {
 
         <select
           id="preprocessor"
-          v-model="state.myForm.preprocessor"
-          :disabled="state.myForm.language !== 'js'"
+          v-model="state.zodForm.preprocessor"
+          :disabled="state.zodForm.language !== 'js'"
         >
           <option value="">None</option>
           <option value="ts">TypeScript</option>
         </select>
 
-        <div class="text-red-500">{{ state.myValdn['myForm.preprocessor'] }}</div>
+        <div class="text-red-500">{{ state.zodValdn.preprocessor }}</div>
       </div>
 
       <button type="button" @click="submit">Submit</button>
     </form>
 
-    <pre>{{ state.myForm }}</pre>
+    <pre>{{ state.zodForm }}</pre>
 
-    <pre>{{ state.myValdn }}</pre>
+    <pre>{{ state.zodValdn }}</pre>
   </fieldset>
 </template>
 

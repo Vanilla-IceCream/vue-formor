@@ -1,41 +1,37 @@
 <script lang="ts" setup>
-import { computed, reactive } from 'vue';
+import { reactive, toRef } from 'vue';
 import { useYupSchema } from 'vue-formor';
-import { string } from 'yup';
+import { object, array, string } from 'yup';
 
-const msgs = {
-  required: 'This is a required field',
-};
-
-type DataTableItem = { firstField?: string; secondField?: string };
+const msgs = { required: 'This is a required field' };
 
 const state = reactive({
-  cols: [
-    { key: 'firstField', name: 'First Field' },
-    { key: 'secondField', name: 'Second Field' },
-  ],
-  rows: [
-    { firstField: 'O', secondField: '' },
-    { firstField: '', secondField: 'O' },
-    { firstField: 'O', secondField: 'O' },
-    { firstField: '', secondField: '' },
-  ],
-
-  valdn: {} as Record<string, string>,
+  tabularForm: {
+    cols: [
+      { key: 'firstField', name: 'First Field' },
+      { key: 'secondField', name: 'Second Field' },
+    ],
+    rows: [
+      { firstField: 'O', secondField: '' },
+      { firstField: '', secondField: 'O' },
+      { firstField: 'O', secondField: 'O' },
+      { firstField: '', secondField: '' },
+    ],
+  },
+  tabularValdn: {} as Record<string, string>,
 });
 
 const schema = useYupSchema(
-  [
-    [
-      computed(() => state.rows),
-      (row: DataTableItem) => [
-        [computed(() => row.firstField), string().required(msgs.required)],
-        [computed(() => row.secondField), string().required(msgs.required)],
-      ],
-    ],
-  ],
-  state,
-  'valdn',
+  object({
+    rows: array(
+      object({
+        firstField: string().required(msgs.required),
+        secondField: string().required(msgs.required),
+      }),
+    ),
+  }),
+  toRef(state, 'tabularForm'),
+  toRef(state, 'tabularValdn'),
 );
 
 schema.validate();
@@ -48,21 +44,21 @@ schema.validate();
     <table>
       <thead>
         <tr>
-          <th v-for="col in state.cols" :key="col.key">{{ col.name }}</th>
+          <th v-for="col in state.tabularForm.cols" :key="col.key">{{ col.name }}</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="(row, rowIdx) in state.rows" :key="rowIdx">
-          <td v-for="col in state.cols" :key="`${rowIdx}-${col.key}`" class="h-12">
+        <tr v-for="(row, rowIdx) in state.tabularForm.rows" :key="rowIdx">
+          <td v-for="col in state.tabularForm.cols" :key="`${rowIdx}-${col.key}`" class="h-12">
             <input v-model="row[col.key as keyof typeof row]" />
-            <div class="text-red-500">{{ state.valdn[`rows[${rowIdx}].${col.key}`] }}</div>
+            <div class="text-red-500">{{ state.tabularValdn[`rows[${rowIdx}].${col.key}`] }}</div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <pre>{{ state.valdn }}</pre>
+    <pre>{{ state.tabularValdn }}</pre>
   </fieldset>
 </template>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, reactive } from 'vue';
+import { reactive, toRef } from 'vue';
 import { useYupSchema } from '../../vue-formor';
-import { string } from 'yup';
+import { object, string } from 'yup';
 
 interface BasicForms {
   email: string;
@@ -20,12 +20,12 @@ const msgs = {
 };
 
 const schema = useYupSchema(
-  [
-    [computed(() => state.loginForm.email), string().required(msgs.required).email(msgs.email)],
-    [computed(() => state.loginForm.password), string().required(msgs.required).min(8, msgs.min)],
-  ],
-  state,
-  'loginValdn',
+  object({
+    email: string().email(msgs.email).required(msgs.required),
+    password: string().min(8, msgs.min).required(msgs.required),
+  }),
+  toRef(state, 'loginForm'),
+  toRef(state, 'loginValdn'),
 );
 
 const signIn = () => {
@@ -40,13 +40,13 @@ const signIn = () => {
     <div>
       <label>Email:</label>
       <input v-model="state.loginForm.email" type="email" data-testid="email" />
-      <div>{{ state.loginValdn['loginForm.email'] }}</div>
+      <div>{{ state.loginValdn.email }}</div>
     </div>
 
     <div>
       <label>Password:</label>
       <input v-model="state.loginForm.password" type="password" data-testid="password" />
-      <div>{{ state.loginValdn['loginForm.password'] }}</div>
+      <div>{{ state.loginValdn.password }}</div>
     </div>
 
     <button type="button" data-testid="sign-in" @click="signIn">Sign in</button>
