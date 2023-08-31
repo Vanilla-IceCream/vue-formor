@@ -1,23 +1,29 @@
-# Vue Formor [![Build Status](https://travis-ci.org/Vanilla-IceCream/vue-formor.svg?branch=main)](https://travis-ci.org/Vanilla-IceCream/vue-formor) [![Coverage Status](https://coveralls.io/repos/github/Vanilla-IceCream/vue-formor/badge.svg?branch=main)](https://coveralls.io/github/Vanilla-IceCream/vue-formor?branch=main)
+# vue-formor
 
 Form validation for Vue in composition functions.
 
-## Installation and Usage
+## Installation
+
+Install `vue-formor` with your favorite package manager:
 
 ```sh
-$ npm i vue-formor
+$ npm i vue-formor@1.0.1
 # or
-$ pnpm i vue-formor
+$ yarn add vue-formor@1.0.1
 # or
-$ yarn add vue-formor
+$ pnpm i vue-formor@1.0.1
+# or
+$ bun add vue-formor@1.0.1
 ```
 
-```js
-// for commonjs
-const { useValidator, useValidation, useSchema } = require('vue-formor');
+## Usage
 
-// for es modules
-import { useValidator, useValidation, useSchema } from 'vue-formor';
+```ts
+// esm
+import { useValidator, useValidation } from 'vue-formor';
+
+// cjs
+const { useValidator, useValidation } = require('vue-formor');
 ```
 
 ## Examples
@@ -292,110 +298,6 @@ const validation = useValidation(
 );
 ```
 
-### Validation schemas with `yup`
-
-```ts
-import { computed, reactive } from 'vue';
-import { useSchema } from 'vue-formor';
-import { setLocale, string } from 'yup';
-
-setLocale({
-  mixed: {
-    required: 'This is a required field',
-  },
-});
-
-const state = reactive({
-  searchForm: {
-    employeeId: '',
-    employeeName: '',
-  },
-  dataTable: [
-    { firstField: '', secondField: 'O' },
-    { firstField: 'O', secondField: '' },
-    { firstField: '', secondField: '' },
-  ],
-  nestedTable: [
-    {
-      parent: '',
-      children: [
-        { firstField: '', secondField: 'O' },
-        { firstField: 'O', secondField: '' },
-        { firstField: '', secondField: '' },
-      ],
-    },
-    {
-      parent: 'O',
-      children: [
-        { firstField: 'O', secondField: 'O' },
-        { firstField: 'O', secondField: 'O' },
-        { firstField: '', secondField: '' },
-      ],
-    },
-  ],
-  errors: {},
-});
-
-const schema = useSchema(
-  [
-    [computed(() => state.searchForm.employeeId), string().required()],
-    [
-      computed(() => state.searchForm.employeeName),
-      computed(() => state.searchForm.employeeId ? string().nullable() : string().required()),
-    ],
-    [
-      computed(() => state.dataTable),
-      (row, idx) => [
-        [computed(() => row.firstField), string().required()],
-        [computed(() => row.secondField), string().required()],
-      ],
-    ],
-    [
-      computed(() => state.nestedTable),
-      (row, idx) => [
-        [computed(() => row.parent), string().required()],
-        [
-          computed(() => row.children),
-          (subRow, subIdx) => [
-            [computed(() => subRow.firstField), string().required()],
-            [computed(() => subRow.secondField), string().required()],
-          ],
-        ],
-      ],
-    ],
-  ],
-  state,
-);
-
-const submit = () => {
-  if (schema.validate()) {
-    // passed
-  } else {
-    // failed
-    console.log(state.errors);
-
-    console.log(state.errors['searchForm.employeeId']); // This is a required field
-    console.log(state.errors['searchForm.employeeName']); // This is a required field
-
-    console.log(state.errors['dataTable[0].firstField']);
-    console.log(state.errors['dataTable[0].secondField']);
-    console.log(state.errors['dataTable[1].firstField']);
-    console.log(state.errors['dataTable[1].secondField']);
-
-    console.log(state.errors['nestedTable[0].parent']);
-    console.log(state.errors['nestedTable[0].children[0].firstField']);
-    console.log(state.errors['nestedTable[0].children[0].secondField']);
-    console.log(state.errors['nestedTable[0].children[1].firstField']);
-    console.log(state.errors['nestedTable[0].children[1].secondField']);
-    console.log(state.errors['nestedTable[1].parent']);
-    console.log(state.errors['nestedTable[1].children[0].firstField']);
-    console.log(state.errors['nestedTable[1].children[0].secondField']);
-    console.log(state.errors['nestedTable[1].children[1].firstField']);
-    console.log(state.errors['nestedTable[1].children[1].secondField']);
-  }
-};
-```
-
 ## API Reference
 
 ### `useValidator`
@@ -436,22 +338,3 @@ validation.stop();
 ```
 
 Type: `useValidation(fields, storeIn)`
-
-### `useSchema`
-
-Create `yup` schema
-
-```ts
-const schema = useSchema(
-  [
-    // fields
-  ],
-  // storeIn
-);
-
-schema.validate(); // return Boolean
-
-schema.stop();
-```
-
-Type: `useSchema(fields, storeIn)`

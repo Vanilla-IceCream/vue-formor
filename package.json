@@ -1,7 +1,7 @@
 {
   "name": "vue-formor",
   "type": "module",
-  "version": "2.0.2",
+  "version": "1.0.1",
   "description": "Form validation for Vue in composition functions.",
   "main": "./dist/vue-formor.umd.cjs",
   "module": "./dist/vue-formor.js",
@@ -37,7 +37,8 @@
   },
   "homepage": "https://github.com/Vanilla-IceCream/vue-formor#readme",
   "dependencies": {
-    "message-interpolation": "^1.0.1"
+    "message-interpolation": "^1.0.1",
+    "vue-formor": "1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
