@@ -1,23 +1,29 @@
-# Vue Formor [![Build Status](https://travis-ci.org/Vanilla-IceCream/vue-formor.svg?branch=main)](https://travis-ci.org/Vanilla-IceCream/vue-formor) [![Coverage Status](https://coveralls.io/repos/github/Vanilla-IceCream/vue-formor/badge.svg?branch=main)](https://coveralls.io/github/Vanilla-IceCream/vue-formor?branch=main)
+# vue-formor
 
 Form validation for Vue in composition functions.
 
-## Installation and Usage
+## Installation
+
+Install `vue-formor` with your favorite package manager:
 
 ```sh
-$ npm i vue-formor
+$ npm i vue-formor@2.0.2
 # or
-$ pnpm i vue-formor
+$ yarn add vue-formor@2.0.2
 # or
-$ yarn add vue-formor
+$ pnpm i vue-formor@2.0.2
+# or
+$ bun add vue-formor@2.0.2
 ```
 
-```js
-// for commonjs
-const { useValidator, useValidation, useSchema } = require('vue-formor');
+## Usage
 
-// for es modules
+```ts
+// esm
 import { useValidator, useValidation, useSchema } from 'vue-formor';
+
+// cjs
+const { useValidator, useValidation, useSchema } = require('vue-formor');
 ```
 
 ## Examples
@@ -341,7 +347,7 @@ const schema = useSchema(
     [computed(() => state.searchForm.employeeId), string().required()],
     [
       computed(() => state.searchForm.employeeName),
-      computed(() => state.searchForm.employeeId ? string().nullable() : string().required()),
+      computed(() => (state.searchForm.employeeId ? string().nullable() : string().required())),
     ],
     [
       computed(() => state.dataTable),
