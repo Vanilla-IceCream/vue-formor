@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { withDefault, object, array, string, minLength } from 'valibot';
+import { optional, object, array, string, minLength } from 'valibot';
 
 const msgs = { required: 'This is a required field' };
 
@@ -35,11 +35,11 @@ const schema = useValibotSchema(
   object({
     groups: array(
       object({
-        parent: withDefault(string([minLength(1, msgs.required)]), ''),
+        parent: optional(string([minLength(1, msgs.required)]), ''),
         children: array(
           object({
-            firstField: withDefault(string([minLength(1, msgs.required)]), ''),
-            secondField: withDefault(string([minLength(1, msgs.required)]), ''),
+            firstField: optional(string([minLength(1, msgs.required)]), ''),
+            secondField: optional(string([minLength(1, msgs.required)]), ''),
           }),
         ),
       }),
