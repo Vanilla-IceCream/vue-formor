@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, string, minLength } from 'valibot';
+import { optional, object, string, minLength, getPipeIssues } from 'valibot';
 
 interface CustomSchemas {
   name: string;
@@ -24,15 +24,7 @@ const schema = useValibotSchema(
         minLength(1, msgs.required),
         (input) => {
           if (input && !/^[A-Za-z]+$/.test(input)) {
-            return {
-              issues: [
-                {
-                  validation: 'custom',
-                  message: msgs.letters,
-                  input,
-                },
-              ],
-            };
+            return getPipeIssues('custom', msgs.letters, input);
           }
 
           return { output: input };
