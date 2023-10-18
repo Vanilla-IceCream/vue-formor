@@ -1,4 +1,4 @@
-import type { EffectScope, Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { BaseSchema } from 'valibot';
 import { watch, effectScope, onUnmounted } from 'vue';
 import { safeParse } from 'valibot';
@@ -6,12 +6,9 @@ import { safeParse } from 'valibot';
 import { debounce } from './utils';
 
 export const useValibotSchema = (schema: BaseSchema, target: Ref, errors: Ref) => {
-  let _scope: EffectScope;
+  const scope = effectScope();
 
   const validate = () => {
-    const scope = effectScope();
-    _scope = scope;
-
     const parse = () => {
       const parsed = safeParse(schema, target.value);
 
@@ -61,7 +58,7 @@ export const useValibotSchema = (schema: BaseSchema, target: Ref, errors: Ref) =
 
   const stop = () => {
     errors.value = {};
-    _scope?.stop();
+    scope.stop();
   };
 
   onUnmounted(() => {

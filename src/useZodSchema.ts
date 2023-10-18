@@ -1,16 +1,13 @@
-import type { EffectScope, Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { ZodSchema } from 'zod';
 import { watch, effectScope, onUnmounted } from 'vue';
 
 import { debounce } from './utils';
 
 export const useZodSchema = (schema: ZodSchema, target: Ref, errors: Ref) => {
-  let _scope: EffectScope;
+  const scope = effectScope();
 
   const validate = () => {
-    const scope = effectScope();
-    _scope = scope;
-
     const parse = () => {
       const parsed = schema.safeParse(target.value);
 
@@ -51,7 +48,7 @@ export const useZodSchema = (schema: ZodSchema, target: Ref, errors: Ref) => {
 
   const stop = () => {
     errors.value = {};
-    _scope?.stop();
+    scope.stop();
   };
 
   onUnmounted(() => {
