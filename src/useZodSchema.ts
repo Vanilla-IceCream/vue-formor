@@ -1,15 +1,19 @@
-import type { Ref } from 'vue';
+import type { Ref, ComputedRef } from 'vue';
 import type { ZodSchema } from 'zod';
-import { watch, effectScope, onUnmounted } from 'vue';
+import { watch, unref, effectScope, onUnmounted } from 'vue';
 
 import { debounce } from './utils';
 
-export const useZodSchema = (schema: ZodSchema, target: Ref, errors: Ref) => {
+export const useZodSchema = (
+  schema: ZodSchema | ComputedRef<ZodSchema>,
+  target: Ref,
+  errors: Ref,
+) => {
   const scope = effectScope();
 
   const validate = () => {
     const parse = () => {
-      const parsed = schema.safeParse(target.value);
+      const parsed = unref(schema).safeParse(target.value);
 
       errors.value = {};
 

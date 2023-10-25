@@ -3,7 +3,10 @@ import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
 import { optional, object, array, string, minLength } from 'valibot';
 
-const msgs = { required: 'This is a required field' };
+interface TabularFormRow {
+  firstField?: string;
+  secondField?: string;
+}
 
 const state = reactive({
   tabularForm: {
@@ -12,14 +15,18 @@ const state = reactive({
       { key: 'secondField', name: 'Second Field' },
     ],
     rows: [
-      { firstField: 'O', secondField: '' },
-      { firstField: '', secondField: 'O' },
+      { firstField: 'O' },
+      { secondField: 'O' },
       { firstField: 'O', secondField: 'O' },
-      { firstField: '', secondField: '' },
-    ],
+      {},
+    ] as TabularFormRow[],
   },
   tabularValdn: {} as Record<string, string>,
 });
+
+const msgs = {
+  required: 'This is a required field',
+};
 
 const schema = useValibotSchema(
   object({
@@ -34,17 +41,36 @@ const schema = useValibotSchema(
   toRef(state, 'tabularValdn'),
 );
 
-schema.validate();
+const add = () => {
+  state.tabularForm.rows = [{}, ...state.tabularForm.rows];
+};
+
+const remove = (rowIdx: number) => {
+  const arr = [...state.tabularForm.rows];
+  arr.splice(rowIdx, 1);
+  state.tabularForm.rows = arr;
+};
+
+const submit = () => {
+  if (schema.validate()) {
+    console.log('validated data =', state.tabularForm);
+  }
+};
 </script>
 
 <template>
   <fieldset>
     <legend>Tabular Forms</legend>
 
+    <button type="button" @click="add">Add</button>
+
     <table>
       <thead>
         <tr>
-          <th v-for="col in state.tabularForm.cols" :key="col.key">{{ col.name }}</th>
+          <th v-for="col in state.tabularForm.cols" :key="col.key">
+            {{ col.name }}
+          </th>
+          <th></th>
         </tr>
       </thead>
 
@@ -54,9 +80,17 @@ schema.validate();
             <input v-model="row[col.key as keyof typeof row]" />
             <div class="text-red-500">{{ state.tabularValdn[`rows[${rowIdx}].${col.key}`] }}</div>
           </td>
+
+          <td>
+            <button v-if="state.tabularForm.rows?.length > 1" type="button" @click="remove(rowIdx)">
+              Remove
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
+
+    <button type="button" @click="submit">Submit</button>
 
     <pre>{{ state.tabularValdn }}</pre>
   </fieldset>

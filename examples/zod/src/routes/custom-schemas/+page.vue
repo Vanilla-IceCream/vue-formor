@@ -22,7 +22,7 @@ const string = () => z.string({ required_error: msgs.required });
 const schema = useZodSchema(
   z.object({
     name: string()
-      .nonempty(msgs.required)
+      .min(1, msgs.required)
       .refine((val) => {
         if (val) return /^[A-Za-z]+$/.test(val);
         return true;

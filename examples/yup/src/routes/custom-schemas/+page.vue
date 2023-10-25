@@ -32,7 +32,7 @@ const schema = useYupSchema(
 
 const submit = () => {
   if (schema.validate()) {
-    // passed
+    console.log('validated data =', state.yupForm);
   }
 };
 </script>

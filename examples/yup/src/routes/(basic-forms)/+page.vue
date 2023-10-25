@@ -4,13 +4,13 @@ import { useYupSchema } from 'vue-formor';
 import { object, string } from 'yup';
 
 interface BasicForms {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 const state = reactive({
   loginForm: {} as BasicForms,
-  loginValdn: {} as Record<string, string>,
+  loginValdn: {} as Record<keyof BasicForms, string>,
 });
 
 const msgs = {

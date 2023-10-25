@@ -19,7 +19,7 @@ const msgs = {
 
 const schema = useZodSchema(
   z.object({
-    language: z.string({ required_error: msgs.required }).nonempty(msgs.required),
+    language: z.string({ required_error: msgs.required }).min(1, msgs.required),
     preprocessor: z
       .string()
       .optional()

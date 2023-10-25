@@ -35,11 +35,11 @@ const schema = useZodSchema(
   z.object({
     groups: z.array(
       z.object({
-        parent: z.string({ required_error: msgs.required }).nonempty(msgs.required),
+        parent: z.string({ required_error: msgs.required }).min(1, msgs.required),
         children: z.array(
           z.object({
-            firstField: z.string({ required_error: msgs.required }).nonempty(msgs.required),
-            secondField: z.string({ required_error: msgs.required }).nonempty(msgs.required),
+            firstField: z.string({ required_error: msgs.required }).min(1, msgs.required),
+            secondField: z.string({ required_error: msgs.required }).min(1, msgs.required),
           }),
         ),
       }),

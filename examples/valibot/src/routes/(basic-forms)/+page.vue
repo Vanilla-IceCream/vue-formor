@@ -4,13 +4,13 @@ import { useValibotSchema } from 'vue-formor';
 import { optional, object, string, minLength, email } from 'valibot';
 
 interface BasicForms {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 const state = reactive({
   loginForm: {} as BasicForms,
-  loginValdn: {} as Record<string, string>,
+  loginValdn: {} as Record<keyof BasicForms, string>,
 });
 
 const msgs = {

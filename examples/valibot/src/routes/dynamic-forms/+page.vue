@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, string, minLength, getPipeIssues } from 'valibot';
+import { optional, object, string, minLength, getPipeIssues, getOutput } from 'valibot';
 
 interface DynamicForms {
-  language: string;
-  preprocessor: string;
+  language?: string;
+  preprocessor?: string;
 }
 
 const state = reactive({
-  zodForm: {} as DynamicForms,
-  zodValdn: {} as Record<string, string>,
+  valibotForm: {} as DynamicForms,
+  valibotValdn: {} as Record<keyof DynamicForms, string>,
 });
 
 const msgs = {
@@ -23,26 +23,26 @@ const schema = useValibotSchema(
     preprocessor: optional(
       string([
         (input) => {
-          if (state.zodForm.language === 'js' && !input) {
+          if (state.valibotForm.language === 'js' && !input) {
             return getPipeIssues('custom', msgs.required, input);
           }
 
-          return { output: input };
+          return getOutput(input);
         },
       ]),
     ),
   }),
-  toRef(state, 'zodForm'),
-  toRef(state, 'zodValdn'),
+  toRef(state, 'valibotForm'),
+  toRef(state, 'valibotValdn'),
 );
 
 const changeLanguage = () => {
-  state.zodForm.preprocessor = '';
+  state.valibotForm.preprocessor = '';
 };
 
 const submit = () => {
   if (schema.validate()) {
-    // passed
+    console.log('validated data =', state.valibotForm);
   }
 };
 </script>
@@ -55,14 +55,14 @@ const submit = () => {
       <div class="flex gap-2">
         <label for="language">Language:</label>
 
-        <select id="language" v-model="state.zodForm.language" @change="changeLanguage">
+        <select id="language" v-model="state.valibotForm.language" @change="changeLanguage">
           <option value="">None</option>
           <option value="html">HTML</option>
           <option value="css">CSS</option>
           <option value="js">JavaScript</option>
         </select>
 
-        <div class="text-red-500">{{ state.zodValdn.language }}</div>
+        <div class="text-red-500">{{ state.valibotValdn.language }}</div>
       </div>
 
       <div class="flex gap-2">
@@ -70,22 +70,22 @@ const submit = () => {
 
         <select
           id="preprocessor"
-          v-model="state.zodForm.preprocessor"
-          :disabled="state.zodForm.language !== 'js'"
+          v-model="state.valibotForm.preprocessor"
+          :disabled="state.valibotForm.language !== 'js'"
         >
           <option value="">None</option>
           <option value="ts">TypeScript</option>
         </select>
 
-        <div class="text-red-500">{{ state.zodValdn.preprocessor }}</div>
+        <div class="text-red-500">{{ state.valibotValdn.preprocessor }}</div>
       </div>
 
       <button type="button" @click="submit">Submit</button>
     </form>
 
-    <pre>{{ state.zodForm }}</pre>
+    <pre>{{ state.valibotForm }}</pre>
 
-    <pre>{{ state.zodValdn }}</pre>
+    <pre>{{ state.valibotValdn }}</pre>
   </fieldset>
 </template>
 

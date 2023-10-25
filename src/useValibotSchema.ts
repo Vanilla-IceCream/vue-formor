@@ -1,16 +1,20 @@
-import type { Ref } from 'vue';
+import type { Ref, ComputedRef } from 'vue';
 import type { BaseSchema } from 'valibot';
-import { watch, effectScope, onUnmounted } from 'vue';
+import { watch, unref, effectScope, onUnmounted } from 'vue';
 import { safeParse } from 'valibot';
 
 import { debounce } from './utils';
 
-export const useValibotSchema = (schema: BaseSchema, target: Ref, errors: Ref) => {
+export const useValibotSchema = (
+  schema: BaseSchema | ComputedRef<BaseSchema>,
+  target: Ref,
+  errors: Ref,
+) => {
   const scope = effectScope();
 
   const validate = () => {
     const parse = () => {
-      const parsed = safeParse(schema, target.value);
+      const parsed = safeParse(unref(schema), target.value);
 
       errors.value = {};
 

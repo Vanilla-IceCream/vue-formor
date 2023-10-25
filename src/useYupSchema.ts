@@ -1,10 +1,10 @@
-import type { Ref } from 'vue';
+import type { Ref, ComputedRef } from 'vue';
 import type { Schema, ValidationError } from 'yup';
-import { watch, effectScope, onUnmounted } from 'vue';
+import { watch, unref, effectScope, onUnmounted } from 'vue';
 
 import { debounce } from './utils';
 
-export const useYupSchema = (schema: Schema, target: Ref, errors: Ref) => {
+export const useYupSchema = (schema: Schema | ComputedRef<Schema>, target: Ref, errors: Ref) => {
   const scope = effectScope();
 
   const validate = () => {
@@ -12,7 +12,7 @@ export const useYupSchema = (schema: Schema, target: Ref, errors: Ref) => {
       let parsedSuccess = false;
 
       try {
-        schema.validateSync(target.value, { abortEarly: false });
+        unref(schema).validateSync(target.value, { abortEarly: false });
         parsedSuccess = true;
         errors.value = {};
       } catch (error) {

@@ -7,7 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.4",
+    "vue": "^3.3.7",
     "vue-formor": "link:../..",
     "vue-router": "^4.2.5",
     "zod": "^3.22.4"
@@ -15,7 +15,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
     "typescript": "^5.2.2",
-    "vite": "^4.4.11",
+    "vite": "^4.5.0",
     "vite-plugin-vue-routes": "^1.0.4"
   }
 }

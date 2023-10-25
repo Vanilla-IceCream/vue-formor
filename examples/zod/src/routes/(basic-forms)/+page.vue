@@ -4,13 +4,13 @@ import { useZodSchema } from 'vue-formor';
 import { z } from 'zod';
 
 interface BasicForms {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 const state = reactive({
   loginForm: {} as BasicForms,
-  loginValdn: {} as Record<string, string>,
+  loginValdn: {} as Record<keyof BasicForms, string>,
 });
 
 const msgs = {
@@ -21,8 +21,8 @@ const msgs = {
 
 const schema = useZodSchema(
   z.object({
-    email: z.string({ required_error: msgs.required }).email(msgs.email).nonempty(msgs.required),
-    password: z.string({ required_error: msgs.required }).min(8, msgs.min).nonempty(msgs.required),
+    email: z.string({ required_error: msgs.required }).email(msgs.email).min(1, msgs.required),
+    password: z.string({ required_error: msgs.required }).min(8, msgs.min).min(1, msgs.required),
   }),
   toRef(state, 'loginForm'),
   toRef(state, 'loginValdn'),

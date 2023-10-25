@@ -3,8 +3,6 @@ import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
 import { optional, object, array, string, minLength } from 'valibot';
 
-const msgs = { required: 'This is a required field' };
-
 const state = reactive({
   tabularForm: {
     groups: [
@@ -30,6 +28,10 @@ const state = reactive({
   },
   tabularValdn: {} as Record<string, string>,
 });
+
+const msgs = {
+  required: 'This is a required field',
+};
 
 const schema = useValibotSchema(
   object({

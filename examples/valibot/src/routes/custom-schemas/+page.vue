@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, string, minLength, getPipeIssues } from 'valibot';
+import { optional, object, string, minLength, getPipeIssues, getOutput } from 'valibot';
 
 interface CustomSchemas {
-  name: string;
+  name?: string;
 }
 
 const state = reactive({
-  zodForm: {} as CustomSchemas,
-  zodValdn: {} as Record<string, string>,
+  valibotForm: {} as CustomSchemas,
+  valibotValdn: {} as Record<keyof CustomSchemas, string>,
 });
 
 const msgs = {
@@ -23,23 +23,23 @@ const schema = useValibotSchema(
       string([
         minLength(1, msgs.required),
         (input) => {
-          if (input && !/^[A-Za-z]+$/.test(input)) {
+          if (!/^[A-Za-z]+$/.test(input)) {
             return getPipeIssues('custom', msgs.letters, input);
           }
 
-          return { output: input };
+          return getOutput(input);
         },
       ]),
       '',
     ),
   }),
-  toRef(state, 'zodForm'),
-  toRef(state, 'zodValdn'),
+  toRef(state, 'valibotForm'),
+  toRef(state, 'valibotValdn'),
 );
 
 const submit = () => {
   if (schema.validate()) {
-    // passed
+    console.log('validated data =', state.valibotForm);
   }
 };
 </script>
@@ -51,16 +51,16 @@ const submit = () => {
     <form>
       <div class="flex gap-2">
         <label for="name">Name:</label>
-        <input id="name" v-model="state.zodForm.name" type="text" />
-        <div class="text-red-500">{{ state.zodValdn.name }}</div>
+        <input id="name" v-model="state.valibotForm.name" type="text" />
+        <div class="text-red-500">{{ state.valibotValdn.name }}</div>
       </div>
 
       <button type="button" @click="submit">Submit</button>
     </form>
 
-    <pre>{{ state.zodForm }}</pre>
+    <pre>{{ state.valibotForm }}</pre>
 
-    <pre>{{ state.zodValdn }}</pre>
+    <pre>{{ state.valibotValdn }}</pre>
   </fieldset>
 </template>
 
