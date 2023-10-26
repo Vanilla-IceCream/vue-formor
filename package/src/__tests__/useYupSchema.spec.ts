@@ -30,50 +30,50 @@ test('YupForm - TabularForms', async () => {
   const wrapper = mount(TabularForms, {});
 
   expect(wrapper.html()).toMatchInlineSnapshot(`
-    "<fieldset data-v-83800d86=\\"\\">
-      <legend data-v-83800d86=\\"\\">Tabular Forms</legend>
-      <table data-v-83800d86=\\"\\">
-        <thead data-v-83800d86=\\"\\">
-          <tr data-v-83800d86=\\"\\">
-            <th data-v-83800d86=\\"\\">First Field</th>
-            <th data-v-83800d86=\\"\\">Second Field</th>
+    "<fieldset data-v-25f07bb0=\\"\\">
+      <legend data-v-25f07bb0=\\"\\">Tabular Forms</legend>
+      <table data-v-25f07bb0=\\"\\">
+        <thead data-v-25f07bb0=\\"\\">
+          <tr data-v-25f07bb0=\\"\\">
+            <th data-v-25f07bb0=\\"\\">First Field</th>
+            <th data-v-25f07bb0=\\"\\">Second Field</th>
           </tr>
         </thead>
-        <tbody data-v-83800d86=\\"\\">
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+        <tbody data-v-25f07bb0=\\"\\">
+          <tr data-v-25f07bb0=\\"\\">
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\"></div>
             </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
-            </td>
-          </tr>
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
-            </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
           </tr>
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+          <tr data-v-25f07bb0=\\"\\">
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\"></div>
             </td>
           </tr>
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+          <tr data-v-25f07bb0=\\"\\">
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\"></div>
             </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\"></div>
+            </td>
+          </tr>
+          <tr data-v-25f07bb0=\\"\\">
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+            </td>
+            <td data-v-25f07bb0=\\"\\" class=\\"h-12\\"><input data-v-25f07bb0=\\"\\">
+              <div data-v-25f07bb0=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
           </tr>
         </tbody>
-      </table><pre data-v-83800d86=\\"\\">{
+      </table><pre data-v-25f07bb0=\\"\\">{
       \\"rows[0].secondField\\": \\"This is a required field\\",
       \\"rows[1].firstField\\": \\"This is a required field\\",
       \\"rows[3].firstField\\": \\"This is a required field\\",

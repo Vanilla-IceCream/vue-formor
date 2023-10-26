@@ -30,50 +30,50 @@ test('ZodForm - TabularForms', async () => {
   const wrapper = mount(TabularForms, {});
 
   expect(wrapper.html()).toMatchInlineSnapshot(`
-    "<fieldset data-v-95a08ccc=\\"\\">
-      <legend data-v-95a08ccc=\\"\\">Tabular Forms</legend>
-      <table data-v-95a08ccc=\\"\\">
-        <thead data-v-95a08ccc=\\"\\">
-          <tr data-v-95a08ccc=\\"\\">
-            <th data-v-95a08ccc=\\"\\">First Field</th>
-            <th data-v-95a08ccc=\\"\\">Second Field</th>
+    "<fieldset data-v-d5e05671=\\"\\">
+      <legend data-v-d5e05671=\\"\\">Tabular Forms</legend>
+      <table data-v-d5e05671=\\"\\">
+        <thead data-v-d5e05671=\\"\\">
+          <tr data-v-d5e05671=\\"\\">
+            <th data-v-d5e05671=\\"\\">First Field</th>
+            <th data-v-d5e05671=\\"\\">Second Field</th>
           </tr>
         </thead>
-        <tbody data-v-95a08ccc=\\"\\">
-          <tr data-v-95a08ccc=\\"\\">
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
+        <tbody data-v-d5e05671=\\"\\">
+          <tr data-v-d5e05671=\\"\\">
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\"></div>
             </td>
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
-            </td>
-          </tr>
-          <tr data-v-95a08ccc=\\"\\">
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
-            </td>
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
           </tr>
-          <tr data-v-95a08ccc=\\"\\">
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
+          <tr data-v-d5e05671=\\"\\">
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\"></div>
             </td>
           </tr>
-          <tr data-v-95a08ccc=\\"\\">
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+          <tr data-v-d5e05671=\\"\\">
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\"></div>
             </td>
-            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
-              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\"></div>
+            </td>
+          </tr>
+          <tr data-v-d5e05671=\\"\\">
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+            </td>
+            <td data-v-d5e05671=\\"\\" class=\\"h-12\\"><input data-v-d5e05671=\\"\\">
+              <div data-v-d5e05671=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
           </tr>
         </tbody>
-      </table><pre data-v-95a08ccc=\\"\\">{
+      </table><pre data-v-d5e05671=\\"\\">{
       \\"rows[0].secondField\\": \\"This is a required field\\",
       \\"rows[1].firstField\\": \\"This is a required field\\",
       \\"rows[3].firstField\\": \\"This is a required field\\",
