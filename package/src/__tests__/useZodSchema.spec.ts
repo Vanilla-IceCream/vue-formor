@@ -1,13 +1,13 @@
 import { test, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
 
-import TabularForms from '../../examples/yup/src/routes/tabular-forms/+page.vue';
-import TabularFormGroups from '../../examples/yup/src/routes/tabular-form-groups/+page.vue';
+import TabularForms from '../../../examples/zod/src/routes/tabular-forms/+page.vue';
+import TabularFormGroups from '../../../examples/zod/src/routes/tabular-form-groups/+page.vue';
 
-import YupForm from './fixtures/YupForm.vue';
+import ZodForm from './fixtures/ZodForm.vue';
 
-test('YupForm', async () => {
-  const wrapper = mount(YupForm, {});
+test('ZodForm', async () => {
+  const wrapper = mount(ZodForm, {});
 
   wrapper.get('[data-testid="email"]').setValue('foo.bar@gmail.com');
   await wrapper.get('[data-testid="sign-in"]').trigger('click');
@@ -26,54 +26,54 @@ test('YupForm', async () => {
   wrapper.unmount();
 });
 
-test('YupForm - TabularForms', async () => {
+test('ZodForm - TabularForms', async () => {
   const wrapper = mount(TabularForms, {});
 
   expect(wrapper.html()).toMatchInlineSnapshot(`
-    "<fieldset data-v-83800d86=\\"\\">
-      <legend data-v-83800d86=\\"\\">Tabular Forms</legend>
-      <table data-v-83800d86=\\"\\">
-        <thead data-v-83800d86=\\"\\">
-          <tr data-v-83800d86=\\"\\">
-            <th data-v-83800d86=\\"\\">First Field</th>
-            <th data-v-83800d86=\\"\\">Second Field</th>
+    "<fieldset data-v-95a08ccc=\\"\\">
+      <legend data-v-95a08ccc=\\"\\">Tabular Forms</legend>
+      <table data-v-95a08ccc=\\"\\">
+        <thead data-v-95a08ccc=\\"\\">
+          <tr data-v-95a08ccc=\\"\\">
+            <th data-v-95a08ccc=\\"\\">First Field</th>
+            <th data-v-95a08ccc=\\"\\">Second Field</th>
           </tr>
         </thead>
-        <tbody data-v-83800d86=\\"\\">
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+        <tbody data-v-95a08ccc=\\"\\">
+          <tr data-v-95a08ccc=\\"\\">
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
             </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
-            </td>
-          </tr>
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
-            </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
           </tr>
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+          <tr data-v-95a08ccc=\\"\\">
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\"></div>
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
             </td>
           </tr>
-          <tr data-v-83800d86=\\"\\">
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+          <tr data-v-95a08ccc=\\"\\">
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
             </td>
-            <td data-v-83800d86=\\"\\" class=\\"h-12\\"><input data-v-83800d86=\\"\\">
-              <div data-v-83800d86=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\"></div>
+            </td>
+          </tr>
+          <tr data-v-95a08ccc=\\"\\">
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
+            </td>
+            <td data-v-95a08ccc=\\"\\" class=\\"h-12\\"><input data-v-95a08ccc=\\"\\">
+              <div data-v-95a08ccc=\\"\\" class=\\"text-red-500\\">This is a required field</div>
             </td>
           </tr>
         </tbody>
-      </table><pre data-v-83800d86=\\"\\">{
+      </table><pre data-v-95a08ccc=\\"\\">{
       \\"rows[0].secondField\\": \\"This is a required field\\",
       \\"rows[1].firstField\\": \\"This is a required field\\",
       \\"rows[3].firstField\\": \\"This is a required field\\",
@@ -85,7 +85,7 @@ test('YupForm - TabularForms', async () => {
   wrapper.unmount();
 });
 
-test('YupForm - TabularFormGroups', async () => {
+test('ZodForm - TabularFormGroups', async () => {
   const wrapper = mount(TabularFormGroups, {});
 
   expect(wrapper.html()).toMatchInlineSnapshot(`
