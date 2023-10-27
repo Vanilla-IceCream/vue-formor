@@ -1,6 +1,6 @@
 {
   "name": "vue-formor",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Form validation for Vue in composition functions with Valibot or Zod or Yup.",
   "main": "./dist/vue-formor.cjs",
   "module": "./dist/vue-formor.js",
