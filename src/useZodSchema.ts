@@ -9,9 +9,11 @@ export const useZodSchema = (
   target: Ref,
   errors: Ref,
 ) => {
-  const scope = effectScope();
+  let validated = false;
 
   const validate = () => {
+    validated = true;
+
     const parse = () => {
       const parsed = unref(schema).safeParse(target.value);
 
@@ -33,26 +35,24 @@ export const useZodSchema = (
       return parsed.success;
     };
 
-    scope.run(() => {
-      const debouncing = debounce(() => {
-        parse();
-      });
-
-      watch(
-        () => target.value,
-        () => {
-          debouncing();
-        },
-        { deep: true },
-      );
+    const debouncing = debounce(() => {
+      parse();
     });
+
+    watch(
+      () => target.value,
+      () => {
+        if (validated) debouncing();
+      },
+      { deep: true },
+    );
 
     return parse();
   };
 
   const stop = () => {
+    validated = false;
     errors.value = {};
-    scope.stop();
   };
 
   onUnmounted(() => {

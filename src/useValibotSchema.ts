@@ -1,6 +1,6 @@
 import type { Ref, ComputedRef } from 'vue';
 import type { BaseSchema } from 'valibot';
-import { watch, unref, effectScope, onUnmounted } from 'vue';
+import { watch, unref, onUnmounted } from 'vue';
 import { safeParse } from 'valibot';
 
 import { debounce } from './utils';
@@ -10,9 +10,11 @@ export const useValibotSchema = (
   target: Ref,
   errors: Ref,
 ) => {
-  const scope = effectScope();
+  let validated = false;
 
   const validate = () => {
+    validated = true;
+
     const parse = () => {
       const parsed = safeParse(unref(schema), target.value);
 
@@ -22,13 +24,21 @@ export const useValibotSchema = (
         for (let i = 0; i < parsed.issues.length; i++) {
           const issue = parsed.issues[i];
 
-          let errorPath = issue.path?.[0].key;
+          let errorPath = issue.path?.length ? String(issue.path?.[0].key) : '';
 
-          if (issue.path?.some((item) => item.schema === 'array')) {
+          if (
+            issue.path?.some(
+              (item) =>
+                // @ts-ignore - valibot v0.19-
+                item.schema === 'array' ||
+                // valibot v0.20+
+                item.type === 'array',
+            )
+          ) {
             errorPath = issue.path?.reduce((acc, cur) => {
               if (typeof cur.key === 'number') return acc + `[${cur.key}]`;
               if (acc) return acc + `.${cur.key}`;
-              return cur.key;
+              return String(cur.key);
             }, '');
           }
 
@@ -43,26 +53,24 @@ export const useValibotSchema = (
       return parsed.success;
     };
 
-    scope.run(() => {
-      const debouncing = debounce(() => {
-        parse();
-      });
-
-      watch(
-        () => target.value,
-        () => {
-          debouncing();
-        },
-        { deep: true },
-      );
+    const debouncing = debounce(() => {
+      parse();
     });
+
+    watch(
+      () => target.value,
+      () => {
+        if (validated) debouncing();
+      },
+      { deep: true },
+    );
 
     return parse();
   };
 
   const stop = () => {
+    validated = false;
     errors.value = {};
-    scope.stop();
   };
 
   onUnmounted(() => {

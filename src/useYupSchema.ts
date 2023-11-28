@@ -1,13 +1,15 @@
 import type { Ref, ComputedRef } from 'vue';
 import type { Schema, ValidationError } from 'yup';
-import { watch, unref, effectScope, onUnmounted } from 'vue';
+import { watch, unref, onUnmounted } from 'vue';
 
 import { debounce } from './utils';
 
 export const useYupSchema = (schema: Schema | ComputedRef<Schema>, target: Ref, errors: Ref) => {
-  const scope = effectScope();
+  let validated = false;
 
   const validate = () => {
+    validated = true;
+
     const parse = () => {
       let parsedSuccess = false;
 
@@ -29,26 +31,24 @@ export const useYupSchema = (schema: Schema | ComputedRef<Schema>, target: Ref, 
       return parsedSuccess;
     };
 
-    scope.run(() => {
-      const debouncing = debounce(() => {
-        parse();
-      });
-
-      watch(
-        () => target.value,
-        () => {
-          debouncing();
-        },
-        { deep: true },
-      );
+    const debouncing = debounce(() => {
+      parse();
     });
+
+    watch(
+      () => target.value,
+      () => {
+        if (validated) debouncing();
+      },
+      { deep: true },
+    );
 
     return parse();
   };
 
   const stop = () => {
+    validated = false;
     errors.value = {};
-    scope.stop();
   };
 
   onUnmounted(() => {

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { BaseValidation } from 'valibot';
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
 import { optional, object, string, minLength, getPipeIssues, getOutput } from 'valibot';
@@ -17,18 +18,36 @@ const msgs = {
   required: `This is a required field`,
 };
 
+function customValidation<T = any>(fn: BaseValidation<T>['_parse']): BaseValidation<T> {
+  return {
+    async: false,
+    message: '',
+    _parse: fn,
+  };
+}
+
 const schema = useValibotSchema(
   object({
     language: optional(string([minLength(1, msgs.required)]), ''),
     preprocessor: optional(
       string([
-        (input) => {
+        /** valibot v0.20- */
+        // (input) => {
+        //   if (state.valibotForm.language === 'js' && !input) {
+        //     return getPipeIssues('custom', msgs.required, input);
+        //   }
+
+        //   return getOutput(input);
+        // },
+
+        /** valibot v0.21+ */
+        customValidation((input) => {
           if (state.valibotForm.language === 'js' && !input) {
             return getPipeIssues('custom', msgs.required, input);
           }
 
           return getOutput(input);
-        },
+        }),
       ]),
     ),
   }),

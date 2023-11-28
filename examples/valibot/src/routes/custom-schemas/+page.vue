@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { BaseValidation } from 'valibot';
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
 import { optional, object, string, minLength, getPipeIssues, getOutput } from 'valibot';
@@ -17,18 +18,36 @@ const msgs = {
   letters: 'This must contain only letters',
 };
 
+function customValidation<T = any>(fn: BaseValidation<T>['_parse']): BaseValidation<T> {
+  return {
+    async: false,
+    message: '',
+    _parse: fn,
+  };
+}
+
 const schema = useValibotSchema(
   object({
     name: optional(
       string([
         minLength(1, msgs.required),
-        (input) => {
+        /** valibot v0.20- */
+        // (input) => {
+        //   if (!/^[A-Za-z]+$/.test(input)) {
+        //     return getPipeIssues('custom', msgs.letters, input);
+        //   }
+
+        //   return getOutput(input);
+        // },
+
+        /** valibot v0.21+ */
+        customValidation((input) => {
           if (!/^[A-Za-z]+$/.test(input)) {
             return getPipeIssues('custom', msgs.letters, input);
           }
 
           return getOutput(input);
-        },
+        }),
       ]),
       '',
     ),
