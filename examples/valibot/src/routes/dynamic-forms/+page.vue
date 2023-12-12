@@ -22,16 +22,6 @@ const schema = useValibotSchema(
     language: optional(string([minLength(1, msgs.required)]), ''),
     preprocessor: optional(
       string([
-        /** valibot v0.20- */
-        // (input) => {
-        //   if (state.valibotForm.language === 'js' && !input) {
-        //     return getPipeIssues('custom', msgs.required, input);
-        //   }
-
-        //   return getOutput(input);
-        // },
-
-        /** valibot v0.21+ */
         custom((input) => state.valibotForm.language === 'js' && !!input, msgs.required),
       ]),
     ),

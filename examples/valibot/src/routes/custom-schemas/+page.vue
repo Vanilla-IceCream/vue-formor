@@ -22,16 +22,6 @@ const schema = useValibotSchema(
     name: optional(
       string([
         minLength(1, msgs.required),
-        /** valibot v0.20- */
-        // (input) => {
-        //   if (!/^[A-Za-z]+$/.test(input)) {
-        //     return getPipeIssues('custom', msgs.letters, input);
-        //   }
-
-        //   return getOutput(input);
-        // },
-
-        /** valibot v0.21+ */
         custom((input) => /^[A-Za-z]+$/.test(input), msgs.letters),
       ]),
       '',
