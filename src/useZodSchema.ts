@@ -1,6 +1,6 @@
 import type { Ref, ComputedRef } from 'vue';
 import type { ZodSchema } from 'zod';
-import { watch, unref, effectScope, onUnmounted } from 'vue';
+import { watch, unref, onUnmounted } from 'vue';
 
 import { debounce } from './utils';
 
