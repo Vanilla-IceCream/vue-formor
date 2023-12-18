@@ -64,7 +64,7 @@ export const useZodSchema = (
     watch(
       () => touched?.value,
       () => {
-        parse(true);
+        if (!validated) parse(true);
       },
       { deep: true },
     );
