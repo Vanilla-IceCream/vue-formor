@@ -11,12 +11,12 @@ test('ValibotForm', async () => {
 
   expect(wrapper.html()).toMatchInlineSnapshot(`
     "<form>
-      <div><label>Email:</label><input type=\\"email\\" data-testid=\\"email\\">
+      <div><label>Email:</label><input type="email" data-testid="email">
         <div></div>
       </div>
-      <div><label>Password:</label><input type=\\"password\\" data-testid=\\"password\\">
+      <div><label>Password:</label><input type="password" data-testid="password">
         <div>This is a required field</div>
-      </div><button type=\\"button\\" data-testid=\\"sign-in\\">Sign in</button>
+      </div><button type="button" data-testid="sign-in">Sign in</button>
     </form>"
   `);
 
