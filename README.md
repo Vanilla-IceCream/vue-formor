@@ -2,6 +2,8 @@
 
 Form validation for Vue in composition functions with Valibot or Zod or Yup.
 
+The main branch refers to the `vue-formor` v5 release. Check out the [v4.x branch](https://github.com/Vanilla-IceCream/vue-formor/tree/v4.x) for v4.
+
 ## Installation
 
 Install `vue-formor` with your favorite package manager:

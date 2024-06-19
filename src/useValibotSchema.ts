@@ -1,12 +1,14 @@
 import type { Ref, ComputedRef } from 'vue';
-import type { BaseSchema } from 'valibot';
+import type { BaseSchema, BaseIssue, ObjectPathItem, ArrayPathItem } from 'valibot';
 import { watch, unref, onUnmounted } from 'vue';
 import { safeParse } from 'valibot';
 
 import { debounce } from './utils';
 
-export const useValibotSchema = (
-  schema: BaseSchema | ComputedRef<BaseSchema>,
+export const useValibotSchema = <
+  const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
+>(
+  schema: TSchema | ComputedRef<TSchema>,
   target: Ref,
   errors: Ref,
   touched?: Ref,
@@ -22,26 +24,19 @@ export const useValibotSchema = (
       for (let i = 0; i < parsed.issues.length; i++) {
         const issue = parsed.issues[i];
 
-        let errorPath = issue.path?.length ? String(issue.path?.[0].key) : '';
+        let errorPath = issue.path?.length ? String((issue.path?.[0] as ObjectPathItem).key) : '';
 
-        if (
-          issue.path?.some(
-            (item) =>
-              // @ts-ignore - valibot v0.19-
-              item.schema === 'array' ||
-              // valibot v0.20+
-              item.type === 'array',
-          )
-        ) {
+        if (issue.path?.some((item) => item.type === 'array')) {
           errorPath = issue.path?.reduce((acc, cur) => {
-            if (typeof cur.key === 'number') return acc + `[${cur.key}]`;
-            if (acc) return acc + `.${cur.key}`;
-            return String(cur.key);
+            const path = cur as ArrayPathItem;
+            if (typeof path.key === 'number') return acc + `[${path.key}]`;
+            if (acc) return acc + `.${path.key}`;
+            return String(path.key);
           }, '');
         }
 
         if (errorPath) {
-          if (!Object.keys(errors.value).includes(errorPath)) {
+          if (!errors.value[errorPath]) {
             if (useTouch) {
               if (touched?.value?.[errorPath]) errors.value[errorPath] = issue.message;
             } else {

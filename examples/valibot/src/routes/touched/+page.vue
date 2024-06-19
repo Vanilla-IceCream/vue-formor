@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, toRef, onMounted } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, string, minLength, email } from 'valibot';
+import * as v from 'valibot';
 
 interface LoginForm {
   email?: string;
@@ -21,9 +21,12 @@ const msgs = {
 };
 
 const schema = useValibotSchema(
-  object({
-    email: optional(string([minLength(1, msgs.required), email(msgs.email)]), ''),
-    password: optional(string([minLength(1, msgs.required), minLength(8, msgs.min)]), ''),
+  v.object({
+    email: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required), v.email(msgs.email)), ''),
+    password: v.nullish(
+      v.pipe(v.string(), v.minLength(1, msgs.required), v.minLength(8, msgs.min)),
+      '',
+    ),
   }),
   toRef(state, 'loginForm'),
   toRef(state, 'loginValdn'),

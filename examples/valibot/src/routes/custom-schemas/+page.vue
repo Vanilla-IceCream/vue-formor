@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, string, minLength, custom } from 'valibot';
+import * as v from 'valibot';
 
 interface CustomSchemas {
   name?: string;
@@ -18,12 +18,15 @@ const msgs = {
 };
 
 const schema = useValibotSchema(
-  object({
-    name: optional(
-      string([
-        minLength(1, msgs.required),
-        custom((input) => /^[A-Za-z]+$/.test(input), msgs.letters),
-      ]),
+  v.object({
+    name: v.nullish(
+      v.pipe(
+        v.string(),
+        v.minLength(1, msgs.required),
+        v.check((input) => /^[A-Za-z]+$/.test(input), msgs.letters),
+        // equivalent to
+        // v.regex(/^[A-Za-z]+$/, msgs.letters),
+      ),
       '',
     ),
   }),

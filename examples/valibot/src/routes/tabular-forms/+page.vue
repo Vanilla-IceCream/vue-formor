@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, array, string, minLength } from 'valibot';
+import * as v from 'valibot';
 
 interface TabularFormRow {
   firstField?: string;
@@ -29,11 +29,11 @@ const msgs = {
 };
 
 const schema = useValibotSchema(
-  object({
-    rows: array(
-      object({
-        firstField: optional(string([minLength(1, msgs.required)]), ''),
-        secondField: optional(string([minLength(1, msgs.required)]), ''),
+  v.object({
+    rows: v.array(
+      v.object({
+        firstField: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
+        secondField: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
       }),
     ),
   }),

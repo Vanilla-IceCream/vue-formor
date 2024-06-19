@@ -2,7 +2,7 @@
 import { computed, reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
 import { useLocaler } from 'vue-localer';
-import { optional, object, string, minLength } from 'valibot';
+import * as v from 'valibot';
 
 import useLocale from './locales';
 
@@ -22,9 +22,9 @@ const state = reactive({
 
 const schema = useValibotSchema(
   computed(() =>
-    object({
-      username: optional(string([minLength(1, locale.value.required)]), ''),
-      password: optional(string([minLength(1, locale.value.required)]), ''),
+    v.object({
+      username: v.nullish(v.pipe(v.string(), v.minLength(1, locale.value.required)), ''),
+      password: v.nullish(v.pipe(v.string(), v.minLength(1, locale.value.required)), ''),
     }),
   ),
   toRef(state, 'loginForm'),

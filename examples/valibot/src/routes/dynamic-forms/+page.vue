@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
 import { useValibotSchema } from 'vue-formor';
-import { optional, object, string, minLength, custom } from 'valibot';
+import * as v from 'valibot';
 
 interface DynamicForms {
   language?: string;
@@ -18,12 +18,13 @@ const msgs = {
 };
 
 const schema = useValibotSchema(
-  object({
-    language: optional(string([minLength(1, msgs.required)]), ''),
-    preprocessor: optional(
-      string([
-        custom((input) => state.valibotForm.language === 'js' && !!input, msgs.required),
-      ]),
+  v.object({
+    language: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
+    preprocessor: v.nullish(
+      v.pipe(
+        v.string(),
+        v.check((input) => !(state.valibotForm.language === 'js' && !input), msgs.required),
+      ),
     ),
   }),
   toRef(state, 'valibotForm'),
