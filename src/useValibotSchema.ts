@@ -5,9 +5,7 @@ import { safeParse } from 'valibot';
 
 import { debounce } from './utils';
 
-export const useValibotSchema = <
-  const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>,
->(
+export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>>(
   schema: TSchema | ComputedRef<TSchema>,
   target: Ref,
   errors: Ref,
@@ -113,3 +111,12 @@ export const useValibotSchema = <
     rerun,
   };
 };
+
+/**
+ * @deprecated
+ * For front-end development, it is best to use libraries that support tree shaking and modularization.
+ * It is recommended to use valibot. This function will be removed in v6.
+ *
+ * Please use `useSchema` instead.
+ */
+export const useValibotSchema = useSchema;

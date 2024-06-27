@@ -10,7 +10,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'valibot'],
     },
   },
   plugins: [vue(), dts()],

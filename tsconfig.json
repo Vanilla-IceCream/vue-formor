@@ -7,11 +7,9 @@
     "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
-    "paths": {
-      "~/*": ["src/*"]
-    },
+    "paths": {},
     "resolveJsonModule": true,
-    "types": ["vite/client", "vitest"],
+    "types": ["vite/client", "vitest/globals"],
 
     "noEmit": true,
 
@@ -19,6 +17,7 @@
 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
 
     "jsx": "preserve",
     "lib": ["ESNext", "DOM"],

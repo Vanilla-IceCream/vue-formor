@@ -4,6 +4,11 @@ import { watch, unref, onUnmounted } from 'vue';
 
 import { debounce } from './utils';
 
+/**
+ * @deprecated
+ * For front-end development, it is best to use libraries that support tree shaking and modularization.
+ * It is recommended to use valibot. This function will be removed in v6.
+ */
 export const useZodSchema = (
   schema: ZodSchema | ComputedRef<ZodSchema>,
   target: Ref,
