@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
-import { useValibotSchema } from '../../vue-formor';
+import { useSchema } from '../../vue-formor';
 import * as v from 'valibot';
 
 interface BasicForms {
@@ -19,7 +19,7 @@ const msgs = {
   min: `This must be at least 8 characters`,
 };
 
-const schema = useValibotSchema(
+const schema = useSchema(
   v.object({
     email: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required), v.email(msgs.email)), ''),
     password: v.nullish(

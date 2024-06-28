@@ -115,8 +115,8 @@ export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, Bas
 /**
  * @deprecated
  * For front-end development, it is best to use libraries that support tree shaking and modularization.
- * It is recommended to use valibot. This function will be removed in v6.
- *
- * Please use `useSchema` instead.
+ * It is recommended to use Valibot. Since we will no longer support Zod and Yup,
+ * and will only support Valibot, functions with these names are not needed.
+ * This function will be removed in v6. Please use `useSchema` instead.
  */
 export const useValibotSchema = useSchema;

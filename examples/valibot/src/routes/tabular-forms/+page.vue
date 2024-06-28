@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
-import { useValibotSchema } from 'vue-formor';
+import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
 interface TabularFormRow {
@@ -28,7 +28,7 @@ const msgs = {
   required: 'This is a required field',
 };
 
-const schema = useValibotSchema(
+const schema = useSchema(
   v.object({
     rows: v.array(
       v.object({

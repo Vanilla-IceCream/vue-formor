@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, toRef } from 'vue';
-import { useValibotSchema } from 'vue-formor';
+import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
 interface CustomSchemas {
@@ -17,7 +17,7 @@ const msgs = {
   letters: 'This must contain only letters',
 };
 
-const schema = useValibotSchema(
+const schema = useSchema(
   v.object({
     name: v.nullish(
       v.pipe(

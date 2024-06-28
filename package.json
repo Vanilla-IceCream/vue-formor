@@ -1,7 +1,7 @@
 {
   "name": "vue-formor",
   "version": "5.0.0",
-  "description": "Form validation for Vue in composition functions with Valibot or Zod or Yup.",
+  "description": "Form validation for Vue in composition functions with Valibot.",
   "main": "./dist/vue-formor.cjs",
   "module": "./dist/vue-formor.js",
   "types": "./dist/src/vue-formor.d.ts",
@@ -35,8 +35,6 @@
     "form",
     "validation",
     "valibot",
-    "zod",
-    "yup",
     "schema"
   ],
   "author": "Vanilla IceCream",

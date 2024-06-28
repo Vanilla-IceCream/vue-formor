@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, reactive, toRef } from 'vue';
-import { useValibotSchema } from 'vue-formor';
+import { useSchema } from 'vue-formor';
 import { useLocaler } from 'vue-localer';
 import * as v from 'valibot';
 
@@ -20,7 +20,7 @@ const state = reactive({
   loginValdn: {} as Record<keyof LoginForm, string>,
 });
 
-const schema = useValibotSchema(
+const schema = useSchema(
   computed(() =>
     v.object({
       username: v.nullish(v.pipe(v.string(), v.minLength(1, locale.value.required)), ''),
