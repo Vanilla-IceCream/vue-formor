@@ -21,7 +21,7 @@ const state = reactive({
       {},
     ] as TabularFormRow[],
   },
-  tabularValdn: {} as Record<string, string>,
+  tabularValdn: {} as { [key: `rows[${number}].${string}`]: string },
 });
 
 const msgs = {
