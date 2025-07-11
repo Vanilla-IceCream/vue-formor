@@ -7,17 +7,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "valibot": "^0.35.0",
-    "vue": "^3.4.30",
+    "valibot": "^1.1.0",
+    "vue": "^3.5.17",
     "vue-formor": "workspace:*",
-    "vue-localer": "^1.5.2",
-    "vue-router": "^4.4.0",
+    "vue-localer": "^1.5.3",
+    "vue-router": "^4.5.1",
     "vue-storer": "^0.6.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
-    "typescript": "^5.5.2",
-    "vite": "^5.3.1",
-    "vite-plugin-vue-routes": "^1.1.0"
+    "@vitejs/plugin-vue": "^6.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.4",
+    "vite-plugin-vue-routes": "^1.2.1"
   }
 }

@@ -7,6 +7,7 @@ import { RouterLink, RouterView } from 'vue-router';
     <li><RouterLink to="/">Basic Forms</RouterLink></li>
     <li><RouterLink to="/dynamic-forms">Dynamic Forms</RouterLink></li>
     <li><RouterLink to="/tabular-forms">Tabular Forms</RouterLink></li>
+    <li><RouterLink to="/dynamic-tabular-forms">Dynamic Tabular Forms (TODO)</RouterLink></li>
     <li><RouterLink to="/tabular-form-groups">Tabular Form Groups</RouterLink></li>
     <li><RouterLink to="/custom-schemas">Custom Schemas</RouterLink></li>
     <li><RouterLink to="/touched">Touched</RouterLink></li>

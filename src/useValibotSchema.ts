@@ -5,11 +5,13 @@ import { safeParse } from 'valibot';
 
 import { debounce } from './utils';
 
-export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>>(
+export const useValibotSchema = <
+  const TSchema extends BaseSchema<unknown, unknown, BaseIssue<unknown>>
+>(
   schema: TSchema | ComputedRef<TSchema>,
   target: Ref,
   errors: Ref,
-  touched?: Ref,
+  touched?: Ref
 ) => {
   let validated = false;
 
@@ -60,7 +62,7 @@ export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, Bas
       () => {
         if (validated) debouncing();
       },
-      { deep: true },
+      { deep: true }
     );
 
     return parse();
@@ -77,7 +79,7 @@ export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, Bas
       () => {
         if (!validated) parse(true);
       },
-      { deep: true },
+      { deep: true }
     );
 
     const debouncing = debounce(() => {
@@ -89,7 +91,7 @@ export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, Bas
       () => {
         if (!validated) debouncing();
       },
-      { deep: true },
+      { deep: true }
     );
   };
 
@@ -111,12 +113,3 @@ export const useSchema = <const TSchema extends BaseSchema<unknown, unknown, Bas
     rerun,
   };
 };
-
-/**
- * @deprecated
- * For front-end development, it is best to use libraries that support tree shaking and modularization.
- * It is recommended to use Valibot. Since we will no longer support Zod and Yup,
- * and will only support Valibot, functions with these names are not needed.
- * This function will be removed in v6. Please use `useSchema` instead.
- */
-export const useValibotSchema = useSchema;

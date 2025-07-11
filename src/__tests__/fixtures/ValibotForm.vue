@@ -24,11 +24,11 @@ const schema = useSchema(
     email: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required), v.email(msgs.email)), ''),
     password: v.nullish(
       v.pipe(v.string(), v.minLength(1, msgs.required), v.minLength(8, msgs.min)),
-      '',
+      ''
     ),
   }),
   toRef(state, 'loginForm'),
-  toRef(state, 'loginValdn'),
+  toRef(state, 'loginValdn')
 );
 
 const signIn = () => {

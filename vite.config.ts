@@ -10,13 +10,15 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
-      external: [
-        'vue',
-        // 'valibot', // v6
-      ],
+      external: ['vue', 'valibot'],
     },
   },
-  plugins: [vue(), dts()],
+  plugins: [
+    vue(),
+    dts({
+      exclude: ['**/__tests__/**'],
+    }),
+  ],
   test: {
     globals: true,
     environment: 'happy-dom',
