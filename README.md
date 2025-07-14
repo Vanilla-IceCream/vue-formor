@@ -20,7 +20,7 @@ $ bun add vue-formor
 
 > [!NOTE]
 >
-> Don't forget to install `valibot`.
+> Don't forget to install `valibot` v1.
 
 ## Usage
 
@@ -51,11 +51,11 @@ const schema = useSchema(
     email: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required), v.email(msgs.email)), ''),
     password: v.nullish(
       v.pipe(v.string(), v.minLength(1, msgs.required), v.minLength(8, msgs.min)),
-      '',
+      ''
     ),
   }),
   toRef(state, 'loginForm'),
-  toRef(state, 'loginValdn'),
+  toRef(state, 'loginValdn')
 );
 
 const signIn = () => {
@@ -107,6 +107,8 @@ const signIn = () => {
 </style>
 ```
 
+[Edit in Vue SFC Playground](https://play.vuejs.org/#eNqlVW1v2zYQ/iuEvlgebDmpkS7zHC/rkAEdhq1Iin4ysNLSWWZCkRpJyQ4M//cdj5LFZUWGdUBexLuHzz33QvKY/FjXWdtAskiWNjeidkxyVd6sE2fXCbPgmnq1VqKqtXHsyAzw3IkWJszpe9iyE9saXbERUoy+j3CNhYd8BxWPEdOtNpU2EfAbxi1rewSXYqOddyNAOTBbngN7x63If8adlh3XijEkFfKHBbPOCFUimLGaW7vXpoitJ8+Sa2Ud2rgDdnMWnxKP1KVQnnfBjievYwg0Ofs/cVmoHnAPOQZZPsGz3sboLugKt53GpD7ErWxpMSxFM/BnIwwUC/b5405Yhj/8bGRbAbL4TGEpvR5VNUizAYT64hTBGXCVQF0vUNg84Ph9zfIdN5gsGOvRp0iUDW25GVqUero205tHyF2ozVlGm6lGSmF3aZvVogb8F5JNxxN0oohfQZVul15OKN2sT4ncRJKSnT7HaB2NxqR/6FocJXi8nP8ebXBfd260YMieczTqPoPpFP7RHKc0IijuPBSdyi94aSTIHffailK9V1jWdMxuVqHnYsvSUO6M2ock6XgcfIz5fVpChqQpzb73Fwz/YndGfqhw7b1BkA+GokMzl7NwWPFo4sJBVUsE44qxJc0SHlxa4VpCCapY0bwyGtjlrLP53YTxB7PD46oQLcsldgevga2EAyt5PX2zTs4Iz8o3IFd3NCXIR6vILVTdONZOK12ARJoXyYRxwAvGPdeA7n45izliGQ4OboqNnl5dXKCQ4zEuD3UkULLTaTnDjUMy3eorkvvQz+dX5NfP9pBiZPk/WfY0/57opnFOqz58WGHw21yK/MlLponFMA/4wQTOVMD0czPrhqJb1gZeCPKJkgzvegVHwiMgcQ9DupxF84tL654l4DWla/ATmlGT6MwUwiLuecG8qb/iM+pfAODngl1kVwaqszuuaUBNp42aklnXPBcOCS/pcOVaarNgptzw9M38uwl7ixeJ/225Sf+xa+xPJMbAs+gVo9RkkoR3bVrxOnu0WuGzSiHXnQPfVHxMQqXWyfAkevM62TlX28Vstt/vs0bVT2WW62o2oG7fZgfssnWRDcOsk+5eQ8bwhL5KFyC3lz2XUAUciKa/YDAPh/VXW1G+yAIJaiHB/F47gdfX37LhUur9L2RzpoGzJrwA86cv2B/tIej8YMCCaSHKw3FTQpfG3cNvWPXIiWeukYh+xXkPeLU2XmOAvWtUgbIjHKl9T03B9+WjvTs4ULZPygulahCeOvXTK6kPcufZPKriHy0+wIjGAs6zq+zyW29z9tPZepVdZ/Pk9BewfSna)
+
 ## Documentation
 
 To learn more about `vue-formor`, check [its documentation](https://vitesheet.onrender.com/vue-formor/).
@@ -114,7 +116,3 @@ To learn more about `vue-formor`, check [its documentation](https://vitesheet.on
 ## Examples
 
 See [./examples](./examples).
-
-## Playground
-
-- [ValibotForm](https://play.vuejs.org/#eNqlVm1v2zYQ/iuEv1gebMltkKHzHC/rkAEdhq1Iin3Sh8rSWWZCkRpJyQ4M/fcdj5LMekW6tUBii3cPn3vuhbROk5/rOm4bmKwma5NrXlsmMlnepBNr0gkzYJt6k0pe1Upb9lcm+FbZX5Wu2E6rik3jJLA5oumPqVwnngo34sJCVYvMAq4YW4cUCZrWSeCfzCc+0qLK6vjRKIm6Tm5f2jtQ1IqRxdkw3mKHTEo7czrZW1ubVZIcDoe4kfVTGeeqSs6o2+t4GS+TghsbWDFQOpmPnF7gi4QecruMr5DQ03FZwJGYHFGXyg6TsSZXcsfLi1SQo+YC9J+15Up+mlImhDr8RjarGxhl5XvInz5jfzRHL/W9BgO6hSAVm+kS+kzuHv6AIz6PzkoVjUD0C857MEo0TqOHvW1kgbIDHKl9R53hsvxg7o4WpBmSckKpGoSndv3yQupnuVfxVVDFiwn7b6N6Yhqy3PIW5syqe9ixrh/ZfkhHXGPgAatbZSGiH40A+B3LDGsHhJfk3AiQFvQuy4G9zQzPnU7js0JSLn5aMWM1lgfBjNWZMQeli9CKeaYSJ8VYtOFJYDej+Ih4hCq5dLxYrc7pOAei0pIfy1TIAXAPOQZZP8Gz2oXoPugGt3UzUu/jVqY0GJaiafi74RqKFfv4Yc8Nw79sNLIdB1F8pLCU3oCqGqTZAkJdcQrv9LiKo64LFDYPMnx+w/J9pjFZ0Mahu0CU8W25ObcocnRtrLaPkFtfm1FGG8tGCG72URvXvAb88slGszk6UcTvIEu7j17NKd14SIncRBKRnR5naJ1OZ/2kD10Lo3iPk/P/o53db3o3WjDkwDmd9o/e1PkvmuOIRgTFjUPRq/yMl0aC3GGvDS/lO4lljWbsZuN7zncs8uWOqX1IEs1mw9l0+5SAGEkjmn3nLxh+Ynembqhw7bxekAvmT+8XfgxolvDg0grXAkqQxYbmldHArpPe5nYTxh3MHo+rgrcsF9gdvAZ2Ao6szOrF63QyIhxrtgWxuaMpQT5aBW4u68aydoF3HgikuUjGjwNeMPa5BnQPS/fjNXKEMixepQts9OJ6uUQhp1NYHuqIp2Rdt8bfjvacTL/6iuTeD/P5FfkNs31OMbB8S5YDzZcT3TbWKjmE9ysMfpsLnj85yTSxGOYBHxjHmfKYYW6Sfij6Za3hQhC9bjgZzvUCjoQHQOI+D+knLyu4NPZZAF5TqgY3oTE1ic4MvhMg7nnFnGm44mPqnwfg44ot42sN1egOa+pRi0UjF2RWdZZzi4Sv6HDlSii9YrrcZtHrqx/m7Hu8SNx/m+noX7tm7kRiDDyLTrF70+r+ATIbVKQ=)
