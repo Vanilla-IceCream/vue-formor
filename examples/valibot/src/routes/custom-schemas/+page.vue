@@ -3,9 +3,9 @@ import { reactive, toRef } from 'vue';
 import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
-interface CustomSchemas {
+type CustomSchemas = {
   name?: string;
-}
+};
 
 const state = reactive({
   valibotForm: {} as CustomSchemas,
@@ -23,15 +23,15 @@ const schema = useSchema(
       v.pipe(
         v.string(),
         v.minLength(1, msgs.required),
-        v.check((input) => /^[A-Za-z]+$/.test(input), msgs.letters),
+        v.check((input) => /^[A-Za-z]+$/.test(input), msgs.letters)
         // equivalent to
         // v.regex(/^[A-Za-z]+$/, msgs.letters),
       ),
-      '',
+      ''
     ),
   }),
   toRef(state, 'valibotForm'),
-  toRef(state, 'valibotValdn'),
+  toRef(state, 'valibotValdn')
 );
 
 const submit = () => {

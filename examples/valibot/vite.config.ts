@@ -4,13 +4,10 @@ import vue from '@vitejs/plugin-vue';
 import vueRoutes from 'vite-plugin-vue-routes';
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueRoutes(),
-  ],
+  plugins: [vue(), vueRoutes()],
   resolve: {
     alias: {
-      '~': resolve(__dirname, 'src'),
+      '~': resolve(import.meta.dirname, 'src'),
     },
   },
 });

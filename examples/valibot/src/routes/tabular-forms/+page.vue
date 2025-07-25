@@ -3,17 +3,17 @@ import { reactive, toRef } from 'vue';
 import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
-interface TabularFormRow {
+type TabularFormRow = {
   firstField?: string;
   secondField?: string;
-}
+};
 
 const state = reactive({
   tabularForm: {
     cols: [
       { key: 'firstField', name: 'First Field' },
       { key: 'secondField', name: 'Second Field' },
-    ],
+    ] as { key: keyof TabularFormRow; name: string }[],
     rows: [
       { firstField: 'O' },
       { secondField: 'O' },
@@ -21,7 +21,7 @@ const state = reactive({
       {},
     ] as TabularFormRow[],
   },
-  tabularValdn: {} as { [key: `rows[${number}].${string}`]: string },
+  tabularValdn: {} as { [key: `rows[${number}].${keyof TabularFormRow}`]: string },
 });
 
 const msgs = {
@@ -34,11 +34,11 @@ const schema = useSchema(
       v.object({
         firstField: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
         secondField: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
-      }),
+      })
     ),
   }),
   toRef(state, 'tabularForm'),
-  toRef(state, 'tabularValdn'),
+  toRef(state, 'tabularValdn')
 );
 
 const add = () => {
@@ -77,7 +77,7 @@ const submit = () => {
       <tbody>
         <tr v-for="(row, rowIdx) in state.tabularForm.rows" :key="rowIdx">
           <td v-for="col in state.tabularForm.cols" :key="`${rowIdx}-${col.key}`" class="h-12">
-            <input v-model="row[col.key as keyof typeof row]" />
+            <input v-model="row[col.key]" />
             <div class="text-red-500">{{ state.tabularValdn[`rows[${rowIdx}].${col.key}`] }}</div>
           </td>
 

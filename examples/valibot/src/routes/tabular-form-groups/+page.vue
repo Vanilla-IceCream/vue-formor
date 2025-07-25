@@ -3,6 +3,30 @@ import { reactive, toRef } from 'vue';
 import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
+type TabularForm = {
+  groups: {
+    parent?: string;
+    children?: {
+      firstField?: string;
+      secondField?: string;
+    }[];
+  }[];
+};
+
+type TabularValdn = {
+  [
+    key:
+      | `${keyof Pick<TabularForm, 'groups'>}[${number}].${keyof Pick<
+          TabularForm['groups'][number],
+          'parent'
+        >}`
+      | `${keyof Pick<TabularForm, 'groups'>}[${number}].${keyof Pick<
+          TabularForm['groups'][number],
+          'children'
+        >}[${number}].${keyof NonNullable<TabularForm['groups'][number]['children']>[number]}`
+  ]: string;
+};
+
 const state = reactive({
   tabularForm: {
     groups: [
@@ -25,8 +49,8 @@ const state = reactive({
         ],
       },
     ],
-  },
-  tabularValdn: {} as Record<string, string>,
+  } as TabularForm,
+  tabularValdn: {} as TabularValdn,
 });
 
 const msgs = {
@@ -42,13 +66,13 @@ const schema = useSchema(
           v.object({
             firstField: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
             secondField: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required)), ''),
-          }),
+          })
         ),
-      }),
+      })
     ),
   }),
   toRef(state, 'tabularForm'),
-  toRef(state, 'tabularValdn'),
+  toRef(state, 'tabularValdn')
 );
 
 schema.validate();
@@ -59,7 +83,5 @@ schema.validate();
     <legend>Tabular Form Groups</legend>
 
     <pre>{{ state.tabularForm }}</pre>
-
-    <pre>{{ state.tabularValdn }}</pre>
   </fieldset>
 </template>

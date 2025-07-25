@@ -4,15 +4,15 @@
     "strict": true,
     "strictNullChecks": true,
 
+    "allowImportingTsExtensions": true,
     "baseUrl": ".",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "paths": {
-      "~/*": ["src/*"],
-      "responses/*": ["mock/responses/*"]
+      "~/*": ["src/*"]
     },
     "resolveJsonModule": true,
-    "types": ["vite/client", "vitest"],
+    "types": ["vite/client"],
 
     "noEmit": true,
 
@@ -28,5 +28,6 @@
 
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "coverage"]
 }

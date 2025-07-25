@@ -10,10 +10,10 @@ const localer = useLocaler();
 
 const locale = useLocale();
 
-interface LoginForm {
+type LoginForm = {
   username?: string;
   password?: string;
-}
+};
 
 const state = reactive({
   loginForm: {} as LoginForm,
@@ -25,10 +25,10 @@ const schema = useSchema(
     v.object({
       username: v.nullish(v.pipe(v.string(), v.minLength(1, locale.value.required)), ''),
       password: v.nullish(v.pipe(v.string(), v.minLength(1, locale.value.required)), ''),
-    }),
+    })
   ),
   toRef(state, 'loginForm'),
-  toRef(state, 'loginValdn'),
+  toRef(state, 'loginValdn')
 );
 
 const signIn = () => {

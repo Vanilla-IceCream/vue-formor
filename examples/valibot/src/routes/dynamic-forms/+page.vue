@@ -3,10 +3,10 @@ import { reactive, toRef } from 'vue';
 import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
-interface DynamicForms {
+type DynamicForms = {
   language?: string;
   preprocessor?: string;
-}
+};
 
 const state = reactive({
   valibotForm: {} as DynamicForms,
@@ -23,12 +23,12 @@ const schema = useSchema(
     preprocessor: v.nullish(
       v.pipe(
         v.string(),
-        v.check((input) => !(state.valibotForm.language === 'js' && !input), msgs.required),
-      ),
+        v.check((input) => !(state.valibotForm.language === 'js' && !input), msgs.required)
+      )
     ),
   }),
   toRef(state, 'valibotForm'),
-  toRef(state, 'valibotValdn'),
+  toRef(state, 'valibotValdn')
 );
 
 const changeLanguage = () => {

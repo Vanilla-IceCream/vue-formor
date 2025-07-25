@@ -3,10 +3,10 @@ import { reactive, toRef, onMounted } from 'vue';
 import { useSchema } from 'vue-formor';
 import * as v from 'valibot';
 
-interface LoginForm {
+type LoginForm = {
   email?: string;
   password?: string;
-}
+};
 
 const state = reactive({
   loginForm: {} as LoginForm,
@@ -25,12 +25,12 @@ const schema = useSchema(
     email: v.nullish(v.pipe(v.string(), v.minLength(1, msgs.required), v.email(msgs.email)), ''),
     password: v.nullish(
       v.pipe(v.string(), v.minLength(1, msgs.required), v.minLength(8, msgs.min)),
-      '',
+      ''
     ),
   }),
   toRef(state, 'loginForm'),
   toRef(state, 'loginValdn'),
-  toRef(state, 'loginTouched'),
+  toRef(state, 'loginTouched')
 );
 
 onMounted(() => {
